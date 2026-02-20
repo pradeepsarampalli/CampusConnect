@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: verdana;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@ body {
     height: 100vh;
     overflow: hidden;
     margin: 0px;
-}
+} */
 .login{
     display: flex;
     flex-direction: column;

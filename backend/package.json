@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "type":"module",
+  "proxy":"http://localhost:3001",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
