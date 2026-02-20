@@ -18,7 +18,7 @@ npm install
 
 ### Create a `.env` file inside the backend folder:
 ```
-DBSTRING=your_mongodb_connection_string_here
+DBSTRING=val
 ```
 
 ### Run Backend
@@ -40,7 +40,7 @@ nodemon server.js
 
 ---
 
-## 🔹 Frontend Setup
+## Frontend Setup
 
 Open a new terminal:
 
@@ -57,7 +57,7 @@ http://localhost:3000
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 CampusConnect/
@@ -79,7 +79,7 @@ CampusConnect/
 
 ---
 
-## 🔐 Environment Variables
+## Environment Variables
 
 | Variable  | Description |
 |-----------|------------|
