@@ -1,14 +1,14 @@
-/* body {
+body {
     font-family: verdana;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center; 
-    background: linear-gradient(to right, #ead378, #eebb8f);
+    /* background: linear-gradient(to right, #ead378, #eebb8f); */
     height: 100vh;
     overflow: hidden;
     margin: 0px;
-} */
+} 
 .login{
     display: flex;
     flex-direction: column;
@@ -19,10 +19,12 @@
     height: 340px;
     border-radius: 10px;
     background-color: #ffffffda;
+    border: 1px solid gray;
 }
 h1{
     color: rgb(64, 62, 62);
     font-size: 40px;
+    margin: 10px;
 }
 .app-logo{
     display: flex;
