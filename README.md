@@ -88,7 +88,7 @@ CampusConnect/
 ---
 
 
-## Ui images - since i am weak at choosing color kept the ui white to choose color later
+## Ui images - later replace the color with better gradients
 
 # generic dashboard
 <img width="1920" height="878" alt="Screenshot 2026-02-20 234545" src="https://github.com/user-attachments/assets/0ad61132-ebf8-4761-956b-f19b2efe4b16" />
@@ -97,7 +97,8 @@ CampusConnect/
 <img width="1357" height="876" alt="localhost_3000_signin" src="https://github.com/user-attachments/assets/04887038-e6c7-451f-aac4-1444d38a91d5" />
 
 # sign in page
-<img width="1314" height="877" alt="localhost_3000_signup" src="https://github.com/user-attachments/assets/e3b15a42-33e8-4f00-b3fe-375d107f87c3" />
+<img width="1357" height="876" alt="localhost_3000_signin" src="https://github.com/user-attachments/assets/e4845148-1b7c-48e5-8e39-95f5b367506b" />
+
 
 
 
