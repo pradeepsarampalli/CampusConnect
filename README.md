@@ -1,6 +1,6 @@
 ### CampusConnect  
 
-## 📦 Installation & Setup
+## Installation & Setup
 
 ### Clone the Repository
 ```bash
