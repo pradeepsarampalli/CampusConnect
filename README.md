@@ -88,10 +88,17 @@ CampusConnect/
 ---
 
 
-## Ui images
-<img width="1920" height="878" alt="Screenshot 2026-02-20 234545" src="https://github.com/user-attachments/assets/7e04b291-c5a6-4f81-9633-e848cf06e85a" />
-<img width="1314" height="877" alt="localhost_3000_signup" src="https://github.com/user-attachments/assets/b32bc5b2-5396-45f3-9bba-c4fd753ad4eb" />
-<img width="1314" height="877" alt="localhost_3000_signin" src="https://github.com/user-attachments/assets/f97a82bc-9765-4832-9d68-470cb0c465cd" />
+## Ui images - since i am weak at choosing color kept the ui white to choose color later
+
+# generic dashboard
+<img width="1920" height="878" alt="Screenshot 2026-02-20 234545" src="https://github.com/user-attachments/assets/0ad61132-ebf8-4761-956b-f19b2efe4b16" />
+
+# sign up page 
+<img width="1357" height="876" alt="localhost_3000_signin" src="https://github.com/user-attachments/assets/04887038-e6c7-451f-aac4-1444d38a91d5" />
+
+# sign in page
+<img width="1314" height="877" alt="localhost_3000_signup" src="https://github.com/user-attachments/assets/e3b15a42-33e8-4f00-b3fe-375d107f87c3" />
+
 
 
 
