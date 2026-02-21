@@ -1,13 +1,24 @@
 import '../css/Dashboard.css'
 import location from '../assets/location.png'
 import logo from '../assets/logo.png'
+import {useState,useEffect} from 'react';
 function Dashboard(){
+    const [width, setWidth] = useState(window.innerWidth);
+    const [open,setOpen] = useState(false)
+
+useEffect(() => {
+  const handleResize = () => setWidth(window.innerWidth);
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
     return (<>
+    <div className='container'>
     <div className='layout'>
-         <div className="side-bar">
+         <div className={`side-bar ${open ? 'open' : ''}`}>
+            {width<800?'':
             <div className='logo'>
             <h2>CampusConnect</h2>
-            </div>
+            </div>}
             <div className='options'>
             <ul>
                 <li><button>DashBoard</button></li>
@@ -24,11 +35,11 @@ function Dashboard(){
         </div>
         <div className="header">
         <div className="header-left">
-            <ul>
+        {width<800?<button className="menu-btn" onClick={()=>setOpen(!open)}>☰</button>:  <ul>
                 <li><button>Events</button></li>
                 <li><button>Notices</button></li>
                 <li><button>Support</button></li>
-            </ul>
+            </ul>}
         </div>
         <div className="header-center">
             <h2>CampusConnect</h2>
@@ -41,7 +52,7 @@ function Dashboard(){
             </ul>
         </div>
         </div>
-        <div class="main">
+        <div className="main">
             <div className='welcome-msg'>
             <h3>Welcome, User!</h3>
             <p>Here's the overview of latest events!!</p>
@@ -115,6 +126,7 @@ function Dashboard(){
                     </div>
             </div>
         </div>
+    </div>
     </div>
     </>)
 }
