@@ -28,7 +28,7 @@ function Login(){
     }
 
      return(
-    <>
+    <div className="auth-page">
     <form className="login" onSubmit={handleSubmit}>
         <h1>Sign in</h1>
         <div className="app-logo">
@@ -45,6 +45,7 @@ function Login(){
             <button type="submit" id="login">Login</button>
         </div>
     </form>
-    </>)
+    </div>
+    )
 }
 export default Login;

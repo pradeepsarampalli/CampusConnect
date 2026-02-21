@@ -1,0 +1,86 @@
+.volunteer-page {
+    padding: 0;
+}
+
+.volunteer-header {
+    margin-bottom: 28px;
+}
+
+.volunteer-header h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.volunteer-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.volunteer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.volunteer-card {
+    background: #ffffff;
+    border: 1px solid #e8eaed;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.volunteer-card:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}
+
+.volunteer-card-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.volunteer-event {
+    font-size: 13px;
+    color: #3182ce;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.volunteer-description {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.volunteer-card .apply-btn {
+    width: 100%;
+    padding: 10px 16px;
+    background: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.volunteer-card .apply-btn:hover {
+    background: #2b6cb0;
+}
+
+.volunteer-card .apply-btn:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 600px) {
+    .volunteer-grid {
+        grid-template-columns: 1fr;
+    }
+}

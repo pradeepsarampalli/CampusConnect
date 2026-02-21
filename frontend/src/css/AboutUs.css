@@ -1,0 +1,58 @@
+.about-page {
+    padding: 0;
+    max-width: 720px;
+}
+
+.about-header {
+    margin-bottom: 32px;
+}
+
+.about-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.about-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.about-section {
+    margin-bottom: 32px;
+}
+
+.about-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 12px;
+}
+
+.about-section p {
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.highlights-list {
+    list-style: none;
+}
+
+.highlights-list li {
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.6;
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+}
+
+.highlights-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #3182ce;
+    font-weight: bold;
+}

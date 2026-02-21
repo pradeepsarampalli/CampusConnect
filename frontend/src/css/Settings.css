@@ -1,0 +1,193 @@
+.settings-page {
+    padding: 0;
+}
+
+.settings-header {
+    margin-bottom: 28px;
+}
+
+.settings-header h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.settings-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.settings-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-card {
+    background: #ffffff;
+    border: 1px solid #e8eaed;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.settings-card.open {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.settings-card-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s ease;
+}
+
+.settings-card-header:hover {
+    background: #f8fafc;
+}
+
+.settings-card-title-wrap h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 4px 0;
+}
+
+.settings-card-title-wrap p {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+.settings-card-chevron {
+    font-size: 20px;
+    color: #6b7280;
+    font-weight: 300;
+    flex-shrink: 0;
+}
+
+.settings-card-body {
+    padding: 0 24px 24px;
+    border-top: 1px solid #e8eaed;
+}
+
+.settings-expand-content {
+    padding-top: 20px;
+}
+
+.settings-field {
+    margin-bottom: 16px;
+}
+
+.settings-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.settings-field input,
+.settings-field select {
+    width: 100%;
+    max-width: 360px;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.settings-field input:focus,
+.settings-select:focus {
+    outline: none;
+    border-color: #3182ce;
+}
+
+.settings-file-input {
+    font-size: 13px;
+    padding: 8px 0;
+}
+
+.settings-select {
+    width: 100%;
+    max-width: 360px;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.settings-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.settings-toggle-row:last-child {
+    border-bottom: none;
+}
+
+.settings-toggle-row label {
+    font-size: 14px;
+    color: #374151;
+}
+
+.settings-toggle {
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    border: none;
+    background: #e5e7eb;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.settings-toggle.on {
+    background: #3182ce;
+}
+
+.settings-toggle-slider {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.2s ease;
+}
+
+.settings-toggle.on .settings-toggle-slider {
+    transform: translateX(20px);
+}
+
+.settings-save-btn {
+    margin-top: 8px;
+    padding: 10px 24px;
+    background: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.settings-save-btn:hover {
+    background: #2b6cb0;
+}
