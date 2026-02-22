@@ -1,0 +1,233 @@
+.calendar-page {
+    padding: 0;
+}
+
+.calendar-header {
+    margin-bottom: 28px;
+}
+
+.calendar-header h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 4px;
+}
+
+.calendar-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.calendar-container {
+    background: #ffffff;
+    border: 1px solid #e8eaed;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 28px;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.weekday {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-align: center;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #1f2937;
+    background: #f8fafc;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.calendar-day.empty {
+    background: transparent;
+}
+
+.calendar-day.has-event {
+    background: #e8f0fe;
+    color: #1e40af;
+    font-weight: 600;
+}
+
+.calendar-legend {
+    margin-top: 16px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+}
+
+.legend-dot.has-event {
+    background: #3182ce;
+}
+
+.calendar-events-list {
+    background: #ffffff;
+    border: 1px solid #e8eaed;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.calendar-events-list h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+.calendar-events-list ul {
+    list-style: none;
+}
+
+.calendar-events-list li {
+    font-size: 14px;
+    color: #4b5563;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.calendar-events-list li:last-child {
+    border-bottom: none;
+}
+
+.calendar-day.clickable {
+    cursor: pointer;
+}
+
+.calendar-day.clickable:hover {
+    background: #e8f0fe;
+}
+
+.calendar-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.calendar-modal {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    max-width: 420px;
+    width: 100%;
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.calendar-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.calendar-modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.calendar-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.calendar-modal-close:hover {
+    color: #1f2937;
+}
+
+.calendar-modal-content {
+    padding: 20px;
+}
+
+.calendar-modal-empty {
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    padding: 24px 0;
+}
+
+.calendar-modal-events {
+    list-style: none;
+}
+
+.calendar-modal-event {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.calendar-modal-event:last-child {
+    border-bottom: none;
+}
+
+.modal-event-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 4px;
+}
+
+.modal-event-time {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+.modal-event-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.modal-event-location svg {
+    flex-shrink: 0;
+    color: #6b7280;
+}

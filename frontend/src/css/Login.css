@@ -1,102 +1,151 @@
-body {
-    font-family: verdana;
+.auth-page {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; 
-    /* background: linear-gradient(to right, #ead378, #eebb8f); */
-    height: 100vh;
-    overflow: hidden;
-    margin: 0px;
-} 
-.login{
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+    background: #f0f2f5;
+    overflow: auto;
+}
+
+.login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: baseline;
-    padding: 20px;
+    padding: 28px 24px;
     width: 350px;
-    height: 340px;
-    border-radius: 10px;
-    background-color: #ffffffda;
-    border: 1px solid gray;
+    min-height: 340px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
-h1{
-    color: rgb(64, 62, 62);
-    font-size: 40px;
-    margin: 10px;
+
+h1 {
+    color: #1a202c;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
 }
-.app-logo{
+
+.app-logo {
     display: flex;
     justify-content: left;
     align-items: center;
 }
-#password{
+
+#password {
     width: 90%;
 }
-#hs-password{
-    width: 25px;
-    height: 25px;
+
+#hs-password {
+    width: 24px;
+    height: 24px;
 }
-.app-logo img{
+
+.app-logo img {
     mix-blend-mode: multiply;
     width: 70px;
     height: 50px;
-    margin-right: 5px;
+    margin-right: 8px;
     border-radius: 10px;
 }
-.details{
-    margin-top: 20px;
+
+.details {
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
     width: 95%;
+    gap: 4px;
 }
-.details input{
-    height: 33px;
+
+.details input {
+    height: 40px;
     outline: none;
     border: none;
-    border-bottom: 1px solid gray;
+    border-bottom: 2px solid #e2e8f0;
     margin-top: 8px;
     background-color: transparent;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
 }
-.details p{
-    font-size: 12px;
+
+.details input:focus {
+    border-bottom-color: #3182ce;
 }
-.details a{
-    font-size: 12px;
+
+.details p {
+    font-size: 13px;
+    color: #4a5568;
+}
+
+.details a {
+    font-size: 13px;
+    color: #3182ce;
     cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
-.details button{
-    font-size:15px;
-    margin-top: 10px;
-    width: 80px;
-    padding: 5px 3px;
+
+.details a:hover {
+    color: #2b6cb0;
+}
+
+.details button {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 16px;
+    width: 88px;
+    padding: 10px 16px;
     cursor: pointer;
-    background-color:  #2196F3;
+    background-color: #3182ce;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
 }
-.more-options{
+
+.details button:hover {
+    background-color: #2b6cb0;
+}
+
+.details button:active {
+    transform: scale(0.98);
+}
+
+.more-options {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 0px;
+    margin-left: 0;
 }
-.more-options p{
-    margin: 0px;
-    margin-top: 10px;
-    font-size: 12px;
+
+.more-options p {
+    margin: 0;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #4a5568;
 }
-.more-options img{
+
+.more-options img {
     width: 30px;
     height: 30px;
     margin-top: 10px;
     margin-right: 20px;
     cursor: pointer;
+    transition: opacity 0.2s ease;
 }
-#login{
+
+.more-options img:hover {
+    opacity: 0.8;
+}
+
+#login {
     align-self: flex-end;
 }

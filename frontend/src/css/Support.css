@@ -1,0 +1,40 @@
+.support-page {
+    padding: 0;
+}
+
+.support-header {
+    margin-bottom: 28px;
+}
+
+.support-header h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+.support-header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.support-content {
+    max-width: 640px;
+}
+
+.support-section {
+    margin-bottom: 24px;
+}
+
+.support-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.support-section p {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.6;
+}
