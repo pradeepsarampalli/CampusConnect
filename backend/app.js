@@ -25,7 +25,7 @@
     app.get("/",(req,res)=>{
         res.json({message:"success"})
     })
-
+    app.get("/api/event/getEvents", eventController.getEvents)
     app.post("/api/event/registerEvent",eventController.registerEvent)
     
     app.delete("/api/event/deleteEvent",eventController.deleteEvent)

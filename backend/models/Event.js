@@ -12,7 +12,7 @@ const eventSchema = new mongoose.Schema({
         type: String        
     },
     date:{
-        type: Date,
+        type: String,
         required: true 
     },
     time:{
@@ -22,8 +22,7 @@ const eventSchema = new mongoose.Schema({
         type: String
     },
     organizer:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User" //admin or organizer too
+        type: String,
     },
     capacity:{
         type: Number
@@ -34,8 +33,6 @@ const eventSchema = new mongoose.Schema({
     },
     status:{
         type: String,
-        enum:["upcoming","ongoing","completed"],
-        default:"upcoming"
     }
 })
 
