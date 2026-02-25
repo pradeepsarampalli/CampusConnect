@@ -1,7 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import '../css/Dashboard.css';
-import location from '../assets/location.png';
+import locationIcon from '../assets/location.png';
 
 function Layout() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -63,7 +63,7 @@ function Layout() {
                         </ul>
                     </div>
                     <div className="college-info" onClick={handleMapClick} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleMapClick()} title="View on Google Maps">
-                        <img src={location} alt="location" />
+                        <img src={locationIcon} alt="location" />
                         <p>CVR College of Engineering</p>
                     </div>
                 </div>
