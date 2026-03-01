@@ -1,9 +1,10 @@
 import "../css/Register.css";
 import logo from "../assets/logo.png";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import hide from "../assets/hide.png";
 import view from "../assets/view.png";
 import { useState } from "react";
+import { setCurrentUser } from "../utils/auth";
 
 function Register() {
     const [hs, setHs] = useState(true);
@@ -13,9 +14,12 @@ function Register() {
     const [password, setPassword] = useState("");
     const [confirmP, setConfirmP] = useState("");
     const [name, setName] = useState("");
+    const [role, setRole] = useState("user");
 
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState("");
+
+    const navigate = useNavigate();
 
     const validate = () => {
         const newErrors = {};
@@ -35,8 +39,16 @@ function Register() {
         setSuccess("");
         if (!validate()) return;
 
-        // Frontend validation passed - show success (no backend call)
-        setSuccess("Registration form is valid! (Frontend validation only)");
+        const user = {
+            id: Date.now().toString(),
+            name,
+            email,
+            role: role || "user",
+        };
+
+        setCurrentUser(user);
+        setSuccess("Account created! Redirecting to your dashboard...");
+        navigate("/dashboard", { replace: true });
     };
 
     return (
@@ -101,6 +113,17 @@ function Register() {
                             onClick={() => setChs(!chs)}
                         />
                         {errors.confirmP && <span className="validation-error">{errors.confirmP}</span>}
+                    </div>
+                    <div className="input-group">
+                        <select
+                            id="role"
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                        >
+                            <option value="user">User</option>
+                            <option value="volunteer">Volunteer</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </div>
                     <p>Have an account? <Link to="/signin">Sign In</Link></p>
                     <button id="signup-btn" type="submit">Sign Up</button>

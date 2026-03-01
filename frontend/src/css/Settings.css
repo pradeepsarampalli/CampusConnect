@@ -191,3 +191,9 @@
 .settings-save-btn:hover {
     background: #2b6cb0;
 }
+
+.settings-error {
+    font-size: 13px;
+    color: #b91c1c;
+    margin-bottom: 8px;
+}

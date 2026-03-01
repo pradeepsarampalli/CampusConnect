@@ -1,20 +1,66 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getCurrentUser, setCurrentUser } from '../../utils/auth';
 
 function SettingsProfile() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [avatarUrl, setAvatarUrl] = useState('');
     const [saved, setSaved] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSave = (e) => {
+    useEffect(() => {
+        const user = getCurrentUser();
+        if (user) {
+            setName(user.name || '');
+            setEmail(user.email || '');
+            setAvatarUrl(user.avatarUrl || '');
+        }
+    }, []);
+
+    const handleSave = async (e) => {
         e.preventDefault();
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2000);
-    };
+        setError('');
+        setSaved(false);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            // Frontend only - preview could be added here
+        const user = getCurrentUser();
+        if (!user) {
+            setError('You need to be logged in to update your profile.');
+            return;
+        }
+
+        setSaving(true);
+        try {
+            const res = await fetch('/api/auth/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id: user.id,
+                    name,
+                    avatarUrl,
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                setError(data.message || 'Failed to update profile');
+                return;
+            }
+
+            const updatedUser = {
+                ...user,
+                name: data.name,
+                email: data.email,
+                role: data.role,
+                avatarUrl: data.avatarUrl,
+            };
+            setCurrentUser(updatedUser);
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
+        } catch (err) {
+            console.error(err);
+            setError('Failed to update profile');
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -36,21 +82,23 @@ function SettingsProfile() {
                     id="profile-email"
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    readOnly
                     placeholder="your@email.com"
                 />
             </div>
             <div className="settings-field">
-                <label>Profile Picture</label>
+                <label htmlFor="profile-avatar">Avatar URL</label>
                 <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="settings-file-input"
+                    id="profile-avatar"
+                    type="text"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    placeholder="https://example.com/avatar.jpg"
                 />
             </div>
+            {error && <p className="settings-error">{error}</p>}
             <button type="submit" className="settings-save-btn">
-                {saved ? 'Saved!' : 'Save'}
+                {saving ? 'Saving...' : saved ? 'Saved!' : 'Save'}
             </button>
         </form>
     );

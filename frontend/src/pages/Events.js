@@ -1,79 +1,123 @@
+import { useState, useEffect } from 'react';
 import '../css/Events.css';
 import logo from '../assets/logo.png';
 import MapIcon from '../components/MapIcon';
 
-const events = [
-    {
-        id: 1,
-        title: 'Tech Fest 2025',
-        date: 'Feb 25, 2025',
-        location: 'Main Auditorium',
-        description: 'Annual technology festival featuring workshops, hackathons, and guest speakers from the industry.',
-    },
-    {
-        id: 2,
-        title: 'Career Fair',
-        date: 'Mar 5, 2025',
-        location: 'College Grounds',
-        description: 'Connect with top recruiters and explore internship opportunities. Bring your resume.',
-    },
-    {
-        id: 3,
-        title: 'Cultural Night',
-        date: 'Mar 15, 2025',
-        location: 'Open Air Theatre',
-        description: 'An evening of music, dance, and performances showcasing diverse talents from across campus.',
-    },
-    {
-        id: 4,
-        title: 'Sports Day',
-        date: 'Mar 22, 2025',
-        location: 'Sports Complex',
-        description: 'Inter-department athletics competition. Register for your favorite sport.',
-    },
-    {
-        id: 5,
-        title: 'Seminar: AI in Education',
-        date: 'Apr 2, 2025',
-        location: 'Seminar Hall',
-        description: 'Expert talk on artificial intelligence applications in modern education.',
-    },
-    {
-        id: 6,
-        title: 'Startup Pitch Day',
-        date: 'Apr 10, 2025',
-        location: 'Incubation Center',
-        description: 'Students present their startup ideas to investors and mentors.',
-    },
-];
-
 function Events() {
+    const [events, setEvents] = useState([]);
+    const [loadingId, setLoadingId] = useState(null);
+    const [message, setMessage] = useState('');
+
+    // Format date to human-readable
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return new Intl.DateTimeFormat('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+        }).format(date);
+    };
+
+    // Fetch events from backend
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const res = await fetch('http://localhost:3001/api/events');
+                const data = await res.json();
+                setEvents(data);
+            } catch (err) {
+                console.error(err);
+                setMessage('Failed to load events');
+            }
+        };
+        fetchEvents();
+    }, []);
+
+    // Register for an event
+    const handleRegister = async (eventId) => {
+        setLoadingId(eventId);
+        setMessage('');
+
+        try {
+            const userId = "69a320a7cfa4c0bb7c7ca025"; // Test Mongo _id
+
+            const res = await fetch(`http://localhost:3001/api/events/${eventId}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                setMessage(data.message || 'Registration failed');
+                return;
+            }
+
+            // Update seats in frontend
+            setEvents(prev =>
+                prev.map(e =>
+                    e._id === eventId || e.id === eventId
+                        ? { ...e, seatsRemaining: e.seatsRemaining - 1 }
+                        : e
+                )
+            );
+            setMessage('Registered successfully!');
+        } catch (err) {
+            console.error(err);
+            setMessage('Registration failed');
+        } finally {
+            setLoadingId(null);
+        }
+    };
+
     return (
         <div className="events-page">
             <div className="events-header">
                 <h1>Upcoming Events</h1>
                 <p>Discover workshops, seminars, and campus activities</p>
             </div>
+            {message && <p className="events-status">{message}</p>}
             <div className="events-grid">
-                {events.map((event) => (
-                    <div key={event.id} className="event-card">
-                        <div className="event-card-image">
-                            <img src={logo} alt={event.title} />
-                        </div>
-                        <div className="event-card-content">
-                            <h3>{event.title}</h3>
-                            <div className="event-meta">
-                                <span className="event-date">{event.date}</span>
-                                <span className="event-location">
-                                    <MapIcon size={14} />
-                                    {event.location}
-                                </span>
+                {events.map((event) => {
+                    const isFull = event.seatsRemaining <= 0;
+                    const progress = event.seatsRemaining / event.capacity;
+
+                    return (
+                        <div key={event._id || event.id} className="event-card">
+                            <div className="event-card-image">
+                                <img src={logo} alt={event.title} />
                             </div>
-                            <p className="event-description">{event.description}</p>
-                            <button className="register-btn" type="button">Register</button>
+                            <div className="event-card-content">
+                                <h3>{event.title}</h3>
+                                <div className="event-meta">
+                                    <span className="event-date">{formatDate(event.date)}</span>
+                                    <span className="event-location">
+                                        <MapIcon size={14} />
+                                        {event.location}
+                                    </span>
+                                </div>
+                                <p className="event-description">{event.description}</p>
+                                <button
+                                    className={`register-btn ${isFull ? 'full' : ''}`}
+                                    type="button"
+                                    disabled={isFull || loadingId === (event._id || event.id)}
+                                    style={{ '--progress': progress }}
+                                    onClick={() => handleRegister(event._id || event.id)}
+                                >
+                                    {isFull
+                                        ? 'Full'
+                                        : loadingId === (event._id || event.id)
+                                        ? 'Registering...'
+                                        : `Register (${event.seatsRemaining} left)`} 
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );
