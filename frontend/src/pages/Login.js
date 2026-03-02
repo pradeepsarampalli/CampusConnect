@@ -1,14 +1,16 @@
 import "../css/Login.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import hide from "../assets/hide.png"
 import view from "../assets/view.png"
 import { useState } from "react";
+import { setCurrentUser } from "../utils/auth";
 function Login(){
     const [hs,setHs] = useState(true)
 
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const navigate = useNavigate()
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -17,14 +19,33 @@ function Login(){
             alert("Please Enter all the details!")
             return;
         }
-        const response = await fetch("/api/auth/login",{
-            method:"POST",
-            headers: { "Content-Type": "application/json" },
-            body:JSON.stringify({email,password})
-        })
+        try{
+            const response = await fetch("/api/auth/login",{
+                method:"POST",
+                headers: { "Content-Type": "application/json" },
+                body:JSON.stringify({email,password})
+            })
 
-        const data = await response.json()
-        alert(data.message)
+            const data = await response.json()
+
+            if(!response.ok){
+                alert(data.message || "Login failed")
+                return;
+            }
+
+            const user = {
+                id: data.id,
+                name: data.name,
+                email: data.email,
+                role: data.role,
+                avatarUrl: data.avatarUrl
+            }
+            setCurrentUser(user)
+            navigate("/dashboard", { replace:true })
+        }catch(err){
+            console.error(err)
+            alert("Login failed")
+        }
     }
 
      return(

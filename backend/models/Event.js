@@ -1,40 +1,37 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const eventSchema = new mongoose.Schema({
-    title:{
+    title: {
         type: String,
         required: true
     },
-    description:{
+    description: {
         type: String
     },
-    category:{
-        type: String        
+    date: {
+        type: Date,
+        required: true
     },
-    date:{
+    location: {
         type: String,
-        required: true 
+        required: true
     },
-    time:{
-        type: String
-    },
-    venue:{
-        type: String
-    },
-    organizer:{
-        type: String,
-    },
-    capacity:{
-        type: Number
-    },
-    registeredCount:{
+    capacity: {
         type: Number,
-        default:0
+        required: true
     },
-    status:{
-        type: String,
+    seatsRemaining: {
+        type: Number
     }
+}, { timestamps: true })
+
+// Automatically set seatsRemaining = capacity before saving
+eventSchema.pre("save", function (next) {
+    if (this.isNew) {
+        this.seatsRemaining = this.capacity
+    } 
 })
 
-const Event = mongoose.model("Event",eventSchema)
-export default Event 
+const Event = mongoose.model("Event", eventSchema)
+
+export default Event
