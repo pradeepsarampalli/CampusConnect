@@ -1,6 +1,6 @@
 import User  from '../models/User.js'
 
-async function register(req,res) {
+async function signUp(req,res) {
     try{
         const {email,password,name} =req.body
         const user = new User({
@@ -15,6 +15,6 @@ async function register(req,res) {
         res.status(500).json({message:"Failed"})
     }
 }
-export default register
+export default signUp
 
 
