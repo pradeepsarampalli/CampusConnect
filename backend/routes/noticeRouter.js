@@ -1,9 +1,12 @@
 import express from "express"
-import { getNotices } from "../controllers/noticeController.js"
+import { getNotice,createNotice,deleteNotice, updateNotice} from "../controllers/noticeController.js"
 
 const noticeRouter = new express.Router()
 
-noticeRouter.get("/", getNotices)
+noticeRouter.get("/", getNotice)
+noticeRouter.post("/",createNotice)
+noticeRouter.delete("/:id", deleteNotice);
+noticeRouter.put("/:id", updateNotice);
 
 export default noticeRouter
 
