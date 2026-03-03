@@ -123,9 +123,9 @@ function Layout() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/volunteer" onClick={() => setOpen(false)}>
+                                {user.role!=='admin'?<Link to="/volunteer" onClick={() => setOpen(false)}>
                                     <button className={isActive('/volunteer') ? 'active' : ''}>Volunteer</button>
-                                </Link>
+                                </Link>:""}
                             </li>
                             <li>
                                 <Link to="/notices" onClick={() => setOpen(false)}>
@@ -163,7 +163,7 @@ function Layout() {
                         <ul>
                             <li><Link to="/about-us"><button>About Us</button></Link></li>
                             <li><Link to="/calendar"><button>Calendar</button></Link></li>
-                            <li><Link to="/signup"><button>Sign Up</button></Link></li>
+                            {user?"":<li><Link to="/signup"><button>Sign Up</button></Link></li>}
                         </ul>
                         <div className="header-actions">
                             <div className="notification-menu">

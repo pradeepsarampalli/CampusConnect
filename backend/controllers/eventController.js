@@ -117,3 +117,29 @@ export async function getRegistrationCount(req, res) {
         res.status(500).json({ message: "Failed to fetch registration count" });
     }
 }
+
+export async function updateEvent(req,res){
+    const id = req.params.id;
+    try{
+     const event = await Event.findByIdAndUpdate(id,req.body,{new:true, runValidators: true })
+     console.log(event)
+     if(!event) return res.status(404).json({message:"Event not found!"})
+     res.status(200).json({event})
+    }catch(err){
+        console.log(error)
+        res.status(404).json({message:"Not found!"})
+    }
+}
+
+export async function deleteEvent(req,res){
+    const id = req.params.id;
+    try{
+        const event = await Event.findByIdAndDelete(id);
+        if(!event) return res.status(404).json({message:"Event not found!"})
+        res.status(200).json({message:"Event deleted!"})
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message:"Server error"})
+    }
+}

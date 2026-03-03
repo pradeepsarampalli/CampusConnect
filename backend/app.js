@@ -5,6 +5,7 @@ import cors from "cors"
 import userRouter from "./routes/userRouter.js"
 import noticeRouter from "./routes/noticeRouter.js"
 import eventRouter from "./routes/eventRouter.js"
+import statRouter from "./routes/statRouter.js"
 import User from "./models/User.js"
 
 dotenv.config()
@@ -17,6 +18,7 @@ connectDB()
 app.use("/api/auth", userRouter)
 app.use("/api/notices", noticeRouter)
 app.use("/api/events", eventRouter)
+app.use("/api/admin/getStats",statRouter)
 
 // Test endpoint
 app.get("/api/test", (req, res) => {

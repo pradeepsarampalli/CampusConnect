@@ -17,14 +17,24 @@
     font-size: 14px;
     color: #6b7280;
 }
+.calendar-parent-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
 
 .calendar-container {
+    flex: 1;
+    min-width: 400px;
     background: #ffffff;
     border: 1px solid #e8eaed;
     border-radius: 12px;
-    padding: 24px;
+    padding: 26px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    margin-bottom: 28px;
+    margin: 20px;
+    max-width: 100%;
 }
 
 .calendar-weekdays {
@@ -93,6 +103,8 @@
 
 .calendar-events-list {
     background: #ffffff;
+    min-width: 450px;
+    max-width: 100%;
     border: 1px solid #e8eaed;
     border-radius: 12px;
     padding: 24px;

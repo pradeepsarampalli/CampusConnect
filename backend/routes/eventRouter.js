@@ -5,16 +5,16 @@ import {
   createEvent,
   registerForEvent,
   getEvents,
-  getRegistrationCount
+  getRegistrationCount,
+  updateEvent,
+  deleteEvent
 } from "../controllers/eventController.js";
 
-// Get all events
 eventRouter.get("/", getEvents);
-
-// Create event
 eventRouter.post("/", createEvent);
+eventRouter.put("/:id",updateEvent);
+eventRouter.delete("/:id",deleteEvent);
 
-// Register for event
 eventRouter.post("/:id/register", registerForEvent);
 
 // Get registration count

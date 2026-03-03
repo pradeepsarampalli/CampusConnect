@@ -159,7 +159,7 @@ body {
 .header-right ul {
     display: flex;
     list-style: none;
-    gap: 8px;
+    gap: 5px;
 }
 
 .header-center {
@@ -178,12 +178,12 @@ body {
 }
 
 .header-right {
+    flex: 2;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 16px;
 }
-
 .profile-menu {
     position: relative;
 }
@@ -805,3 +805,67 @@ button:hover {
 }
 
 
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal{
+    background: #fff;
+    padding: 30px;
+    width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal h2{
+    margin-bottom: 20px;
+}
+
+.modal-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-form input,
+.modal-form textarea{
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.modal-form textarea{
+    resize: none;
+    height: 90px;
+}
+
+.modal-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+@keyframes fadeIn{
+    from{ opacity:0; transform: scale(0.95); }
+    to{ opacity:1; transform: scale(1); }
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #f3f4f6;
+    border-radius: 12px;
+    color: #4f46e5;
+}

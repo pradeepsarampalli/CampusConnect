@@ -31,6 +31,7 @@ function Calendar() {
                 <h1>Academic Calendar</h1>
                 <p>{currentMonth}</p>
             </div>
+            <div className='calendar-parent-container'>
             <div className="calendar-container">
                 <div className="calendar-weekdays">
                     {weekDays.map((wd) => (
@@ -38,7 +39,7 @@ function Calendar() {
                             {wd}
                         </div>
                     ))}
-                </div>
+                </div >
                 <div className="calendar-grid">
                     {calendarDays.map((item, idx) => (
                         <div
@@ -69,7 +70,7 @@ function Calendar() {
                     <li><strong>Feb 25</strong> – Tech Fest 2025</li>
                 </ul>
             </div>
-
+            </div>
             <CalendarDateModal
                 selectedDate={selectedDate}
                 month="February"
