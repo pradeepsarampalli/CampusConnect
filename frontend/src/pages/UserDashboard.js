@@ -16,8 +16,8 @@ function UserDashboard() {
             try {
                 console.log("Fetching dashboard data..."); // Check if this triggers
                 const [eventRes, noticeRes] = await Promise.all([
-                    fetch('http://localhost:3001/api/events'),
-                    fetch('http://localhost:3001/api/notices')
+                    fetch('http://localhost:3001/api/events',{ credentials: "include",}),
+                    fetch('http://localhost:3001/api/notices',{ credentials: "include",})
                 ]);
 
                 if (!eventRes.ok || !noticeRes.ok) {

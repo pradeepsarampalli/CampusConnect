@@ -25,7 +25,7 @@ function Notices() {
 
     const handleDelete = async (id) => {
     try {
-        await fetch(`http://localhost:3001/api/notices/${id}`,{method: "DELETE"});
+        await fetch(`http://localhost:3001/api/notices/${id}`,{method: "DELETE",credentials: "include",});
         setNotices(prev=>prev.filter(n=>n._id!==id));
     } catch (err) {
         console.error("Delete failed");
@@ -49,7 +49,7 @@ function Notices() {
             method:"PUT",
             headers:{
                 "Content-Type": "application/json"
-            },
+            },credentials: "include",
             body: JSON.stringify({
                 title:formData.title,
                 description:formData.description,
@@ -71,7 +71,7 @@ function Notices() {
         let isMounted = true;
         async function loadNotices() {
             try {
-                const res = await fetch('http://localhost:3001/api/notices');
+                const res = await fetch('http://localhost:3001/api/notices',{credentials: "include",});
                 const data = await res.json();
                 if (!res.ok) {
                     throw new Error(data.message || 'Failed to load notices');

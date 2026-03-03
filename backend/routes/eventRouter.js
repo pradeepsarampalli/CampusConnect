@@ -1,6 +1,5 @@
 import express from "express";
-const eventRouter = express.Router();
-
+import { adminOnly } from "../middlewares/adminOnly.js";
 import {
   createEvent,
   registerForEvent,
@@ -10,14 +9,12 @@ import {
   deleteEvent
 } from "../controllers/eventController.js";
 
+const eventRouter = express.Router();
+
 eventRouter.get("/", getEvents);
-eventRouter.post("/", createEvent);
-eventRouter.put("/:id",updateEvent);
-eventRouter.delete("/:id",deleteEvent);
-
+eventRouter.post("/", adminOnly,createEvent);
+eventRouter.put("/:id",adminOnly,updateEvent);
+eventRouter.delete("/:id",adminOnly,deleteEvent);
 eventRouter.post("/:id/register", registerForEvent);
-
-// Get registration count
 eventRouter.get("/registrations/count/:userId", getRegistrationCount);
-
 export default eventRouter;

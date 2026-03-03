@@ -43,10 +43,10 @@ export async function updateNotice(req,res){
     try{
         const {id} = req.params
         const updated = await Notice.findByIdAndUpdate(id,{...req.body},{ new: true, runValidators: true } )
-        if (!updated) return res.status(404).json({ message: "Notice not found" });
+        if (!updated) return res.status(404).json({ message: "Notice not found!" });
         return res.status(200).json(updated);
     } catch (err) {
-        return res.status(500).json({ message: "error" });
+        return res.status(500).json({ message: "Couldn't update notice!" });
     }
 }
 

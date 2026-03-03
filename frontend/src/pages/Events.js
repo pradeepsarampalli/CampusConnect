@@ -29,7 +29,7 @@ function Events() {
         console.log("Updated data:", editData);
         try{
             const id = editData._id;
-        const res = await fetch(`http://localhost:3001/api/events/${id}`,{method:"PUT",
+        const res = await fetch(`http://localhost:3001/api/events/${id}`,{method:"PUT",credentials: "include",
             headers:{
                 'Content-Type':'application/json'
             },
@@ -54,7 +54,7 @@ function Events() {
     const handleDelete = async (eventId) => {
         console.log("Delete event:", eventId);
         try{
-            const res = await fetch(`http://localhost:3001/api/events/${eventId}`,{method:"DELETE"})
+            const res = await fetch(`http://localhost:3001/api/events/${eventId}`,{method:"DELETE",credentials: "include"})
             if(!res.ok) return;
             setEvents(events=>events.filter(event=>eventId!==event._id))
         }
@@ -66,7 +66,7 @@ function Events() {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await fetch('http://localhost:3001/api/events');
+                const res = await fetch('http://localhost:3001/api/events',{credentials: "include"});
                 const data = await res.json();
                 setEvents(data);
             } catch (err) {

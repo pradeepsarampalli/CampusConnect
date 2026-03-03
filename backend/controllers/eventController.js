@@ -5,27 +5,11 @@ import EventRegistration from "../models/EventRegistration.js"
 export async function createEvent(req, res) {
     try {
         const { title, description, date, location, capacity } = req.body
-
-        if (!title || !date || !location || !capacity) {
-            return res.status(400).json({ message: "Required fields missing" })
-        }
-
-        const event = await Event.create({
-            title,
-            description,
-            date,
-            location,
-            capacity,
-            seatsRemaining: Number(capacity)
-        })
-
-        await event.save()
-
-        res.status(201).json({
-            message: "Event created successfully",
-            event
-        })
-
+        // if (!title || !date || !location || !capacity) {
+        //     return res.status(400).json({ message: "Required fields missing" })
+        // }
+        const event = await Event.create({title,description,date,location,capacity,seatsRemaining:Number(capacity)})
+        res.status(201).json({message: "Event created successfully",event})
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: "Failed to create event" })

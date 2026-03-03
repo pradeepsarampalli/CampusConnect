@@ -34,21 +34,26 @@ function Register() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setSuccess("");
         if (!validate()) return;
-
-        const user = {
-            id: Date.now().toString(),
-            name,
-            email,
-            role: role || "user",
-        };
-
-        setCurrentUser(user);
-        setSuccess("Account created! Redirecting to your dashboard...");
-        navigate("/dashboard", { replace: true });
+        const user = {name,email,password,role: role || "user",};
+        try {
+            const res = await fetch("http://localhost:3001/api/auth/signup", {
+                method: "POST",credentials: "include",headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            })
+            if (!res.ok) return;
+            setCurrentUser(user);
+            setSuccess("Account created! Redirecting to your dashboard...");
+            navigate("/dashboard", { replace: true });
+        }
+        catch (err) {
+            console.log(err)
+        }
     };
 
     return (
@@ -62,67 +67,30 @@ function Register() {
                 {success && <div className="validation-success">{success}</div>}
                 <div className="details">
                     <div className="input-group">
-                        <input
-                            type="text"
-                            id="username"
-                            placeholder="Full Name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+                        <input type="text" id="username" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)}/>
                         {errors.name && <span className="validation-error">{errors.name}</span>}
                     </div>
                     <div className="input-group">
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                        <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         {errors.email && <span className="validation-error">{errors.email}</span>}
                     </div>
                     <div className="input-group">
-                        <input
-                            type={hs ? "password" : "text"}
-                            className="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <img
-                            className="toggle-password"
-                            src={hs ? hide : view}
-                            alt="toggle"
-                            onClick={() => setHs(!hs)}
-                        />
+                        <input type={hs ? "password" : "text"} className="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <img className="toggle-password" src={hs ? hide : view} alt="toggle" onClick={() => setHs(!hs)}/>
                         {errors.password && <span className="validation-error">{errors.password}</span>}
                     </div>
                     <div className="input-group">
                         <input
-                            type={chs ? "password" : "text"}
-                            id="confirm-password"
-                            className="password"
-                            placeholder="Confirm Password"
-                            value={confirmP}
-                            onChange={(e) => setConfirmP(e.target.value)}
+                            type={chs?"password":"text"} id="confirm-password" className="password" placeholder="Confirm Password" value={confirmP} onChange={(e) => setConfirmP(e.target.value)}
                         />
-                        <img
-                            className="toggle-password"
-                            src={chs ? hide : view}
-                            alt="toggle"
-                            onClick={() => setChs(!chs)}
-                        />
+                        <img className="toggle-password" src={chs ? hide : view} alt="toggle" onClick={() => setChs(!chs)}/>
                         {errors.confirmP && <span className="validation-error">{errors.confirmP}</span>}
                     </div>
                     <div className="input-group">
-                        <select
-                            id="role"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                        >
+                        <select id="role" value={role} onChange={(e) => setRole(e.target.value)}>
                             <option value="user">User</option>
                             <option value="volunteer">Volunteer</option>
-                            <option value="admin">Admin</option>
+                            <option value="oragnizer">Organizer</option>
                         </select>
                     </div>
                     <p>Have an account? <Link to="/signin">Sign In</Link></p>

@@ -7,27 +7,24 @@ import { useState } from "react";
 import { setCurrentUser } from "../utils/auth";
 function Login(){
     const [hs,setHs] = useState(true)
-
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const navigate = useNavigate()
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
-
         if(!email || !password) {
             alert("Please Enter all the details!")
             return;
         }
         try{
-            const response = await fetch("/api/auth/login",{
+            const response = await fetch("http://localhost:3001/api/auth/signin",{
                 method:"POST",
+                credentials: "include",
                 headers: { "Content-Type": "application/json" },
-                body:JSON.stringify({email,password})
+                body:JSON.stringify({email,password}),
             })
-
             const data = await response.json()
-
             if(!response.ok){
                 alert(data.message || "Login failed")
                 return;

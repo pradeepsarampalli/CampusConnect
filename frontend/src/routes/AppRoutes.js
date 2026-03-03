@@ -12,36 +12,26 @@ import Support from '../pages/Support';
 import AdminDashboard from '../pages/AdminDashboard';
 import VolunteerDashboard from '../pages/VolunteerDashboard';
 import UserDashboard from '../pages/UserDashboard';
-import { getCurrentUser } from '../utils/auth';
+import { useAuthUser } from "../hooks/useAuthUser";
 
 function DashboardRedirect() {
-    const user = getCurrentUser();
-
-    if (!user) {
-        return <Navigate to="/signin" replace />;
-    }
-
-    if (user.role === 'admin') {
-        return <Navigate to="/dashboard/admin" replace />;
-    }
-
-    if (user.role === 'volunteer') {
-        return <Navigate to="/dashboard/volunteer" replace />;
-    }
-
+    const { user, loading} = useAuthUser();
+    if (loading) return null;
+    if (!user) return <Navigate to="/signin" replace />;
+    if (user.role === "admin") return <Navigate to="/dashboard/admin" replace />;
+    if (user.role === "volunteer") return <Navigate to="/dashboard/volunteer" replace />;
     return <Navigate to="/dashboard/user" replace />;
 }
 
 function RoleGuard({ allowedRoles, children }) {
-    const user = getCurrentUser();
+    const { user, loading } = useAuthUser();
 
-    if (!user) {
-        return <Navigate to="/signin" replace />;
-    }
+    if (loading) return null;
 
-    if (!allowedRoles.includes(user.role)) {
-        return <DashboardRedirect />;
-    }
+    if (!user) return <Navigate to="/signin" replace />;
+
+    if (!allowedRoles.includes(user.role))
+        return <Navigate to="/dashboard" replace />;
 
     return children;
 }
@@ -53,39 +43,18 @@ function AppRoutes() {
                 <Route path="/signin" element={<Login />} />
                 <Route path="/signup" element={<Register />} />
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<UserDashboard />} />
-                    <Route path="dashboard" element={<DashboardRedirect />} />
-                    <Route
-                        path="dashboard/admin"
-                        element={
-                            <RoleGuard allowedRoles={['admin']}>
-                                <AdminDashboard />
-                            </RoleGuard>
-                        }
-                    />
-                    <Route
-                        path="dashboard/volunteer"
-                        element={
-                            <RoleGuard allowedRoles={['volunteer', 'admin']}>
-                                <VolunteerDashboard />
-                            </RoleGuard>
-                        }
-                    />
-                    <Route
-                        path="dashboard/user"
-                        element={
-                            <RoleGuard allowedRoles={['user', 'volunteer', 'admin']}>
-                                <UserDashboard />
-                            </RoleGuard>
-                        }
-                    />
-                    <Route path="events" element={<Events />} />
-                    <Route path="volunteer" element={<Volunteer />} />
-                    <Route path="notices" element={<Notices />} />
-                    <Route path="about-us" element={<AboutUs />} />
-                    <Route path="calendar" element={<Calendar />} />
-                    <Route path="settings" element={<Settings />} />
-                    <Route path="support" element={<Support />} />
+                <Route index element={<UserDashboard />} />
+                <Route path="dashboard" element={<DashboardRedirect />} />
+                <Route path="dashboard/admin" element={<RoleGuard allowedRoles={['admin']}><AdminDashboard /></RoleGuard>}/>
+                <Route path="dashboard/volunteer" element={<RoleGuard allowedRoles={['volunteer', 'admin']}><VolunteerDashboard /></RoleGuard>}/>
+                <Route path="dashboard/user" element={ <RoleGuard allowedRoles={['user', 'volunteer', 'organizer']}><UserDashboard /></RoleGuard>}/>
+                <Route path="events" element={<Events />} />
+                <Route path="volunteer" element={<Volunteer />} />
+                <Route path="notices" element={<Notices />} />
+                <Route path="about-us" element={<AboutUs />} />
+                <Route path="calendar" element={<Calendar />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="support" element={<Support />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

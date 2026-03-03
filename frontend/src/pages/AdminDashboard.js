@@ -35,7 +35,7 @@ function AdminDashboard() {
         console.log(formData);
         try{
             const res = await fetch('http://localhost:3001/api/notices',{
-                method:"POST",
+                method:"POST",credentials: "include",
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(formData)
             })
@@ -58,7 +58,7 @@ function AdminDashboard() {
         console.log(eventData);
         try{
         const res = await fetch('http://localhost:3001/api/events',{
-            method:"POST",
+            method:"POST",credentials: "include",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(eventData)
         })
