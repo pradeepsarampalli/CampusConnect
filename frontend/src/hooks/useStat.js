@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function useStats(){
     const [stats,setStats] = useState(null);
@@ -10,20 +10,19 @@ export default function useStats(){
             const res = await fetch("http://localhost:3001/api/admin/getStats",{credentials:"include"})
             const data = await res.json()
 
-            if(isMounted){
-                setStats(data);
-                setError(null);
-            }
-            }
-            catch(err){
-                if(isMounted){
-                    setError("Something went wrong!")
-                }
-            }
+        if (isMounted) {
+          setStats(data);
+          setError(null);
         }
-        fetchStats();
-        return ()=>isMounted= false;
-    },[])
+      } catch (err) {
+        if (isMounted) {
+          setError("Something went wrong!");
+        }
+      }
+    }
+    fetchStats();
+    return () => (isMounted = false);
+  }, []);
 
-    return {stats,error}
+  return { stats, error };
 }

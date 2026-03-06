@@ -25,29 +25,33 @@ app.use("/api/admin/getStats",authCheck,statRouter)
 
 //not yet worked on this
 app.put("/api/auth/profile", async (req, res) => {
-    try {
-        const { id, name, avatarUrl } = req.body
-        if (!id) return res.status(400).json({ message: "User id is required" })
+  try {
+    const { id, name, avatarUrl } = req.body;
+    if (!id) return res.status(400).json({ message: "User id is required" });
 
-        const update = {}
-        if (typeof name === "string") update.name = name
-        if (typeof avatarUrl === "string") update.avatarUrl = avatarUrl
+    const update = {};
+    if (typeof name === "string") update.name = name;
+    if (typeof avatarUrl === "string") update.avatarUrl = avatarUrl;
 
-        const user = await User.findByIdAndUpdate(id, { $set: update }, { new: true, runValidators: true }).select("name email role avatarUrl")
-        if (!user) return res.status(404).json({ message: "User not found" })
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $set: update },
+      { new: true, runValidators: true },
+    ).select("name email role avatarUrl");
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-        res.json({
-            message: "Profile updated",
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            avatarUrl: user.avatarUrl,
-        })
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({ message: "Failed" })
-    }
-})
+    res.json({
+      message: "Profile updated",
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      avatarUrl: user.avatarUrl,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed" });
+  }
+});
 
-export default app
+export default app;

@@ -7,7 +7,7 @@ import { Users, CalendarDays, Megaphone } from "lucide-react";
 function AdminDashboard() {
     const { user } = useContext(Context);
     const name = user?.name || 'Administrator';
-    const role = (user?.role || 'admin');
+    const role = (user?.role || 'admin').toLowerCase();
     const { stats } = useStats()
 
     const [showNoticeModal, setshowNoticeModal] = useState(false);

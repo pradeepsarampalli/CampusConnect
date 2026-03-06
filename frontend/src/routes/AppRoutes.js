@@ -34,29 +34,50 @@ function RoleGuard({ allowedRoles, children }) {
 }
 
 function AppRoutes() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/signin" element={<Login />} />
-                <Route path="/signup" element={<Register />} />
-                <Route path="/" element={<Layout />}>
-                <Route index element={<UserDashboard />} />
-                <Route path="dashboard" element={<DashboardRedirect />} />
-                <Route path="dashboard/admin" element={<RoleGuard allowedRoles={['admin']}><AdminDashboard /></RoleGuard>}/>
-                <Route path="dashboard/volunteer" element={<RoleGuard allowedRoles={['volunteer', 'admin']}><VolunteerDashboard /></RoleGuard>}/>
-                <Route path="dashboard/user" element={ <RoleGuard allowedRoles={['user', 'volunteer', 'organizer']}><UserDashboard /></RoleGuard>}/>
-                <Route path="events" element={<Events />} />
-                <Route path="volunteer" element={<Volunteer />} />
-                <Route path="notices" element={<Notices />} />
-                <Route path="about-us" element={<AboutUs />} />
-                <Route path="calendar" element={<Calendar />} />
-                <Route path="settings" element={<Settings />} />
-                <Route path="support" element={<Support />} />
-                </Route>
-                <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signin" element={<Login />} />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<UserDashboard />} />
+          <Route path="dashboard" element={<DashboardRedirect />} />
+          <Route
+            path="dashboard/admin"
+            element={
+              <RoleGuard allowedRoles={["admin"]}>
+                <AdminDashboard />
+              </RoleGuard>
+            }
+          />
+          <Route
+            path="dashboard/volunteer"
+            element={
+              <RoleGuard allowedRoles={["volunteer", "admin"]}>
+                <VolunteerDashboard />
+              </RoleGuard>
+            }
+          />
+          <Route
+            path="dashboard/user"
+            element={
+              <RoleGuard allowedRoles={["user", "volunteer", "organizer"]}>
+                <UserDashboard />
+              </RoleGuard>
+            }
+          />
+          <Route path="events" element={<Events />} />
+          <Route path="volunteer" element={<Volunteer />} />
+          <Route path="notices" element={<Notices />} />
+          <Route path="about-us" element={<AboutUs />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="support" element={<Support />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default AppRoutes;
