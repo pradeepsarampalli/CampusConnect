@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import MapIcon from './MapIcon';
 import { CALENDAR_EVENTS } from '../data/calendarEvents';
 import '../css/Calendar.css';
 
@@ -42,7 +41,6 @@ function CalendarDateModal({ selectedDate, month, onClose }) {
                                     <div className="modal-event-title">{event.title}</div>
                                     <div className="modal-event-time">{event.time}</div>
                                     <div className="modal-event-location">
-                                        <MapIcon size={14} />
                                         <span>{event.location}</span>
                                     </div>
                                 </li>

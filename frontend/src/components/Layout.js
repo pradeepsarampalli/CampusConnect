@@ -1,8 +1,8 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import '../css/Dashboard.css';
 import locationIcon from '../assets/location.png';
-import { getCurrentUser, clearCurrentUser } from '../utils/auth';
+import { Context } from '../context/UserContext';
 
 function Layout() {
     const [width, setWidth] = useState(window.innerWidth);
@@ -14,7 +14,7 @@ function Layout() {
     const [notifLoading, setNotifLoading] = useState(false);
     const [notifItems, setNotifItems] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
-    const user = getCurrentUser();
+    const {user,setUser} = useContext(Context);
 
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
@@ -81,9 +81,9 @@ function Layout() {
     };
 
     const handleLogout = () => {
-        clearCurrentUser();
         setProfileOpen(false);
         setNotifOpen(false);
+        setUser(null);
         navigate('/signin', { replace: true });
     };
 
@@ -100,7 +100,6 @@ function Layout() {
             }
         }
     };
-
     return (
         <div className="container">
             <div className="layout">
@@ -123,7 +122,7 @@ function Layout() {
                                 </Link>
                             </li>
                             <li>
-                                {user.role!=='admin'?<Link to="/volunteer" onClick={() => setOpen(false)}>
+                                {user?.role!=='admin'?<Link to="/volunteer" onClick={() => setOpen(false)}>
                                     <button className={isActive('/volunteer') ? 'active' : ''}>Volunteer</button>
                                 </Link>:""}
                             </li>
@@ -217,17 +216,17 @@ function Layout() {
                                         aria-haspopup="true"
                                         aria-expanded={profileOpen}
                                     >
-                                        {user.avatarUrl ? (
-                                            <img src={user.avatarUrl} alt={user.name || "Profile"} />
+                                        {user?.avatarUrl ? (
+                                            <img src={user.avatarUrl} alt={user?.name || "Profile"} />
                                         ) : (
-                                            (user.name || "U").charAt(0).toUpperCase()
+                                            (user?.name || "U").charAt(0).toUpperCase()
                                         )}
                                     </button>
                                     {profileOpen && (
                                         <div className="profile-dropdown">
                                             <div className="profile-info">
-                                                <div className="profile-name">{user.name}</div>
-                                                <div className="profile-role">{user.role}</div>
+                                                <div className="profile-name">{user?.name}</div>
+                                                <div className="profile-role">{user?.role}</div>
                                             </div>
                                             <button
                                                 type="button"

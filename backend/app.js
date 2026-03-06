@@ -9,29 +9,21 @@ import statRouter from "./routes/statRouter.js"
 import User from "./models/User.js"
 import cookieParser from "cookie-parser"
 import { authCheck } from "./middlewares/authCheck.js"
-import bcrypt from 'bcrypt'
-dotenv.config()
+
+dotenv.config({quiet:true})
 const app = express()
 app.use(express.json())
 app.use(cors({origin: "http://localhost:3000",credentials: true}));
 app.use(cookieParser())
 connectDB()
 
-// Routers
 app.use("/api/auth", userRouter)
 app.use("/api/notices", authCheck,noticeRouter)
 app.use("/api/events", authCheck,eventRouter)
 app.use("/api/admin/getStats",authCheck,statRouter)
 
-// Test endpoint
-app.get("/api/test", (req, res) => {
-    res.json({ message: "Backend is connected!" })
-})
 
-// Get profile info
-
-
-// Update profile (name & avatarUrl)
+//not yet worked on this
 app.put("/api/auth/profile", async (req, res) => {
     try {
         const { id, name, avatarUrl } = req.body

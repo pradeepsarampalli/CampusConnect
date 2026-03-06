@@ -1,29 +1,20 @@
-import { useEffect, useState } from 'react';
-import { getCurrentUser, setCurrentUser } from '../../utils/auth';
+import { useContext, useState } from 'react';
+import { Context } from '../../context/UserContext';
 
 function SettingsProfile() {
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const [email] = useState('');
     const [avatarUrl, setAvatarUrl] = useState('');
     const [saved, setSaved] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
-
-    useEffect(() => {
-        const user = getCurrentUser();
-        if (user) {
-            setName(user.name || '');
-            setEmail(user.email || '');
-            setAvatarUrl(user.avatarUrl || '');
-        }
-    }, []);
+     const {user,setUser} = useContext(Context);
 
     const handleSave = async (e) => {
         e.preventDefault();
         setError('');
         setSaved(false);
 
-        const user = getCurrentUser();
         if (!user) {
             setError('You need to be logged in to update your profile.');
             return;
@@ -53,7 +44,7 @@ function SettingsProfile() {
                 role: data.role,
                 avatarUrl: data.avatarUrl,
             };
-            setCurrentUser(updatedUser);
+            setUser(updatedUser)
             setSaved(true);
             setTimeout(() => setSaved(false), 2000);
         } catch (err) {

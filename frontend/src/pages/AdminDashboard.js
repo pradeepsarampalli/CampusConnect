@@ -1,17 +1,17 @@
 import '../css/Dashboard.css';
-import { getCurrentUser } from '../utils/auth';
+import { Context } from '../context/UserContext.js';
 import useStats from '../hooks/useStat.js';
-import { useState } from 'react';
-import { Users,CalendarDays,Megaphone} from "lucide-react";
+import { useContext, useState } from 'react';
+import { Users, CalendarDays, Megaphone } from "lucide-react";
 
 function AdminDashboard() {
-    const user = getCurrentUser();
+    const { user } = useContext(Context);
     const name = user?.name || 'Administrator';
-    const role = (user?.role || 'admin').toLowerCase();
-    const { stats, error } = useStats()
+    const role = (user?.role || 'admin');
+    const { stats } = useStats()
 
-    const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState({
+    const [showNoticeModal, setshowNoticeModal] = useState(false);
+    const [noticeData, setnoticeData] = useState({
         title: "",
         description: ""
     });
@@ -27,25 +27,25 @@ function AdminDashboard() {
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setnoticeData(prev => ({ ...prev, [name]: value }));
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(formData);
-        try{
-            const res = await fetch('http://localhost:3001/api/notices',{
-                method:"POST",credentials: "include",
-                headers:{'Content-Type':'application/json'},
-                body:JSON.stringify(formData)
+        console.log(noticeData);
+        try {
+            const res = await fetch('http://localhost:3001/api/notices', {
+                method: "POST", credentials: "include",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(noticeData)
             })
-            if(!res.ok) console.log("failed to save notice")
+            if (!res.ok) console.log("failed to save notice")
         }
-        catch(err){
+        catch (err) {
             console.log(err)
         }
-        setShowModal(false);
-        setFormData({ title: "",description: ""});
+        setshowNoticeModal(false);
+        setnoticeData({ title: "", description: "" });
     }
 
     function handleEventChange(e) {
@@ -56,36 +56,37 @@ function AdminDashboard() {
     async function handleEventSubmit(e) {
         e.preventDefault();
         console.log(eventData);
-        try{
-        const res = await fetch('http://localhost:3001/api/events',{
-            method:"POST",credentials: "include",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(eventData)
-        })
-        if(!res.ok) console.log("failed to save")
-        setShowEventModal(false);
-        setEventData({title: "",description: "",location: "",
-        date: "",capacity: ""
-        });
-    }
-    catch(err){
-        console.log(err)
-    }
+        try {
+            const res = await fetch('http://localhost:3001/api/events', {
+                method: "POST", credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(eventData)
+            })
+            if (!res.ok) console.log("failed to save")
+            setShowEventModal(false);
+            setEventData({
+                title: "", description: "", location: "",
+                date: "", capacity: ""
+            });
+        }
+        catch (err) {
+            console.log(err)
+        }
 
     }
     return (
         <div className="dashboard-page">
-            {showModal && (
+            {showNoticeModal && (
                 <div className="modal-overlay">
                     <div className="modal">
                         <h2>Create Notice</h2>
                         <form onSubmit={handleSubmit} className="modal-form">
-                            <input type="text" name="title" placeholder="Notice Title" value={formData.title} onChange={handleChange} required/>
-                            <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required/>
-                            {/* <input type="date" name="expiryDate" value={formData.expiryDate} onChange={handleChange}/> */}
+                            <input type="text" name="title" placeholder="Notice Title" value={noticeData.title} onChange={handleChange} required />
+                            <textarea name="description" placeholder="Description" value={noticeData.description} onChange={handleChange} required />
+                            {/* <input type="date" name="expiryDate" value={noticeData.expiryDate} onChange={handleChange}/> */}
                             <div className="modal-actions">
                                 <button type="submit" className="primary-btn">Save</button>
-                                <button type="button" className="secondary-btn" onClick={() => setShowModal(false)}>Cancel</button>
+                                <button type="button" className="secondary-btn" onClick={() => setshowNoticeModal(false)}>Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -96,11 +97,11 @@ function AdminDashboard() {
                     <div className="modal">
                         <h2>Create Event</h2>
                         <form onSubmit={handleEventSubmit} className="modal-form">
-                            <input type="text" name="title" placeholder="Event Title" value={eventData.title} onChange={handleEventChange} required/>
-                            <textarea name="description" placeholder="Event Description" value={eventData.description} onChange={handleEventChange} required/>
-                            <input type="text" name="location" placeholder="Event Location" value={eventData.location} onChange={handleEventChange} required/>
-                            <input type="date" name="date" value={eventData.date} onChange={handleEventChange} required/>
-                            <input type="number" name="capacity" placeholder="Capacity" value={eventData.capacity} onChange={handleEventChange} required/>
+                            <input type="text" name="title" placeholder="Event Title" value={eventData.title} onChange={handleEventChange} required />
+                            <textarea name="description" placeholder="Event Description" value={eventData.description} onChange={handleEventChange} required />
+                            <input type="text" name="location" placeholder="Event Location" value={eventData.location} onChange={handleEventChange} required />
+                            <input type="date" name="date" value={eventData.date} onChange={handleEventChange} required />
+                            <input type="number" name="capacity" placeholder="Capacity" value={eventData.capacity} onChange={handleEventChange} required />
                             <div className="modal-actions">
                                 <button type="submit" className="primary-btn">Save</button>
                                 <button type="button" className="secondary-btn" onClick={() => setShowEventModal(false)}>Cancel</button>
@@ -129,7 +130,7 @@ function AdminDashboard() {
                     <div className="stat-icon"><CalendarDays size={28} /></div>
                     <div className="stat-content">
                         <p className="stat-label">Total Events</p>
-                        <p className="stat-value">{stats?stats.events : 0}</p>
+                        <p className="stat-value">{stats ? stats.events : 0}</p>
                     </div>
                 </div>
                 <div className="stat-card">
@@ -147,7 +148,7 @@ function AdminDashboard() {
                         <h2 className="section-title">Quick Actions</h2>
                     </div>
                     <div className="quick-actions">
-                        <button type="button" className="primary-btn" onClick={() => setShowModal(true)}>Create Notice</button>
+                        <button type="button" className="primary-btn" onClick={() => setshowNoticeModal(true)}>Create Notice</button>
                         <button
                             type="button"
                             className="secondary-btn"

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../css/Events.css';
 import logo from '../assets/logo.png';
-import MapIcon from '../components/MapIcon';
 import { Pencil, Trash2 } from "lucide-react";
 
 function Events() {
@@ -144,7 +143,6 @@ function Events() {
                                 <div className="event-meta">
                                     <span className="event-date">{formatDate(event.date)}</span>
                                     <span className="event-location">
-                                        <MapIcon size={14} />
                                         {event.location}
                                     </span>
                                 </div>

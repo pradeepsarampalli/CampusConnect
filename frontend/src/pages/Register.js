@@ -3,26 +3,29 @@ import logo from "../assets/logo.png";
 import { Link, useNavigate } from 'react-router-dom';
 import hide from "../assets/hide.png";
 import view from "../assets/view.png";
-import { useState } from "react";
-import { setCurrentUser } from "../utils/auth";
+import { useContext, useState } from "react";
+import { Context } from "../context/UserContext";
 
 function Register() {
-    const [hs, setHs] = useState(true);
-    const [chs, setChs] = useState(true);
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmP, setConfirmP] = useState("");
-    const [name, setName] = useState("");
-    const [role, setRole] = useState("user");
+    const [togglePassword, settogglePassword] = useState(true);
+    const [toogleConfirmP, settoogleConfirmP] = useState(true);
+    const {setUser} = useContext(Context)
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        confirmP: "",
+        role: "user"
+    });
 
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState("");
 
     const navigate = useNavigate();
 
-    const validate = () => {
+    const validateForm = () => {
         const newErrors = {};
+        const {name,password,confirmP,email} = formData
         if (!name.trim()) newErrors.name = "Name is required";
         if (!email.trim()) newErrors.email = "Email is required";
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = "Enter a valid email";
@@ -34,20 +37,28 @@ function Register() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = async (e) => {
+    const handleFormChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
         setSuccess("");
-        if (!validate()) return;
-        const user = {name,email,password,role: role || "user",};
+        if (!validateForm()) return;
+        const user = formData;
         try {
             const res = await fetch("http://localhost:3001/api/auth/signup", {
-                method: "POST",credentials: "include",headers: {
+                method: "POST", credentials: "include", headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(user)
             })
             if (!res.ok) return;
-            setCurrentUser(user);
+            setUser(user);
             setSuccess("Account created! Redirecting to your dashboard...");
             navigate("/dashboard", { replace: true });
         }
@@ -59,7 +70,7 @@ function Register() {
     return (
         <div className="auth-page">
             <h1>Sign Up</h1>
-            <form id="signup-form" className="login" onSubmit={handleSubmit}>
+            <form id="signup-form" className="login" onSubmit={handleFormSubmit}>
                 <div className="app-logo">
                     <img src={logo} alt="app-logo" />
                     <p>CampusConnect</p>
@@ -67,27 +78,27 @@ function Register() {
                 {success && <div className="validation-success">{success}</div>}
                 <div className="details">
                     <div className="input-group">
-                        <input type="text" id="username" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                        <input type="text" name="name" id="username" placeholder="Full Name" value={formData.name} onChange={(e) => handleFormChange(e)} />
                         {errors.name && <span className="validation-error">{errors.name}</span>}
                     </div>
                     <div className="input-group">
-                        <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input type="email" name="email" id="email" placeholder="Email" value={formData.email} onChange={(e) => handleFormChange(e)} />
                         {errors.email && <span className="validation-error">{errors.email}</span>}
                     </div>
                     <div className="input-group">
-                        <input type={hs ? "password" : "text"} className="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        <img className="toggle-password" src={hs ? hide : view} alt="toggle" onClick={() => setHs(!hs)}/>
+                        <input type={togglePassword ? "password" : "text"} name="password" className="password" placeholder="Password" value={formData.password} onChange={(e) => handleFormChange(e)} />
+                        <img className="toggle-password" src={togglePassword ? hide : view} alt="toggle" onClick={() => settogglePassword(!togglePassword)} />
                         {errors.password && <span className="validation-error">{errors.password}</span>}
                     </div>
                     <div className="input-group">
                         <input
-                            type={chs?"password":"text"} id="confirm-password" className="password" placeholder="Confirm Password" value={confirmP} onChange={(e) => setConfirmP(e.target.value)}
+                            type={toogleConfirmP ? "password" : "text"} id="confirm-password" name="confirmP" className="password" placeholder="Confirm Password" value={formData.confirmP} onChange={(e) => handleFormChange(e)}
                         />
-                        <img className="toggle-password" src={chs ? hide : view} alt="toggle" onClick={() => setChs(!chs)}/>
+                        <img className="toggle-password" src={toogleConfirmP ? hide : view} alt="toggle" onClick={() => settoogleConfirmP(!toogleConfirmP)} />
                         {errors.confirmP && <span className="validation-error">{errors.confirmP}</span>}
                     </div>
                     <div className="input-group">
-                        <select id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+                        <select id="role" name="role" value={formData.role} onChange={(e) => handleFormChange(e)}>
                             <option value="user">User</option>
                             <option value="volunteer">Volunteer</option>
                             <option value="oragnizer">Organizer</option>

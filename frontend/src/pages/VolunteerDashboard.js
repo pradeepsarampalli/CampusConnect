@@ -1,8 +1,9 @@
 import '../css/Dashboard.css';
-import { getCurrentUser } from '../utils/auth';
+import { Context } from '../context/UserContext';
+import { useContext } from 'react';
 
 function VolunteerDashboard() {
-    const user = getCurrentUser();
+    const {user} = useContext(Context);
     const name = user?.name || 'Volunteer';
     const role = (user?.role || 'volunteer').toLowerCase();
 
@@ -10,7 +11,7 @@ function VolunteerDashboard() {
         <div className="dashboard-page">
             <div className="dashboard-header">
                 <div>
-                    <h1 className="dashboard-title">Welcome, {name} 👋</h1>
+                    <h1 className="dashboard-title">Welcome, {name}!</h1>
                     <p className="dashboard-subtitle">Thank you for contributing to campus events.</p>
                 </div>
                 <span className={`role-badge role-${role}`}>Active Volunteer</span>

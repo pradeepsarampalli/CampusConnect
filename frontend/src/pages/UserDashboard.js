@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import '../css/Dashboard.css';
-import { getCurrentUser } from '../utils/auth';
+import {Context} from "../context/UserContext.js"
 
 function UserDashboard() {
-    const user = getCurrentUser();
+    const {user} = useContext(Context);
     const name = user?.name || 'Student';
+    // const name = user
     const role = (user?.role || 'user').toLowerCase();
 
     const [events, setEvents] = useState([]);
@@ -14,7 +15,6 @@ function UserDashboard() {
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                console.log("Fetching dashboard data..."); // Check if this triggers
                 const [eventRes, noticeRes] = await Promise.all([
                     fetch('http://localhost:3001/api/events',{ credentials: "include",}),
                     fetch('http://localhost:3001/api/notices',{ credentials: "include",})
@@ -113,7 +113,6 @@ function UserDashboard() {
                     <div className="section-header">
                         <h2 className="section-title">My Registrations</h2>
                     </div>
-                    {/* 3. Logic to show actual registration status instead of hardcoded text */}
                     <div className="empty-state">
                         {stats.regCount > 0 ? (
                             <p>You have registered for {stats.regCount} event(s).</p>

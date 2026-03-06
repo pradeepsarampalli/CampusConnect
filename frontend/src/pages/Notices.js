@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { Context } from '../context/UserContext';
 import '../css/Notices.css';
 
 function formatDate(value) {
@@ -14,6 +15,7 @@ function formatDate(value) {
 }
 
 function Notices() {
+    const {user} = useContext(Context)
     const [notices, setNotices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -33,8 +35,7 @@ function Notices() {
 
     const handleEditClick=async (notice)=>{
     setEditingNotice(notice);
-    setFormData({id:notice._id,title: notice.title,description: notice.description,pinned: notice.pinned
-    });
+    setFormData({id:notice._id,title: notice.title,description: notice.description,pinned: notice.pinned});
     setIsModalOpen(true);
 };
     const handleChange = (e) => {
@@ -170,10 +171,10 @@ function Notices() {
     {filteredNotices.map((notice) => (
         <div key={notice._id || notice.id}
             className={`notice-card ${notice.pinned ? 'pinned' : ''}`}>
-            <div className="notice-actions">
+            {user?.role==='admin'?<div className="notice-actions">
                 <button className="action-btn edit" title="Edit" onClick={() => handleEditClick(notice)}><FiEdit2 /></button>
                 <button className="action-btn delete" title="Delete" onClick={()=>handleDelete(notice.id || notice._id)}><FiTrash2 /></button>
-            </div>
+            </div>:""}
             {notice.pinned && <span className="notice-badge">Pinned</span>}
             <div className="notice-date">
                 {formatDate(notice.createdAt)}

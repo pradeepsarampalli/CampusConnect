@@ -12,10 +12,11 @@ import Support from '../pages/Support';
 import AdminDashboard from '../pages/AdminDashboard';
 import VolunteerDashboard from '../pages/VolunteerDashboard';
 import UserDashboard from '../pages/UserDashboard';
-import { useAuthUser } from "../hooks/useAuthUser";
+import { Context } from '../context/UserContext';
+import { useContext } from 'react';
 
 function DashboardRedirect() {
-    const { user, loading} = useAuthUser();
+    const { user, loading} = useContext(Context);
     if (loading) return null;
     if (!user) return <Navigate to="/signin" replace />;
     if (user.role === "admin") return <Navigate to="/dashboard/admin" replace />;
@@ -24,15 +25,11 @@ function DashboardRedirect() {
 }
 
 function RoleGuard({ allowedRoles, children }) {
-    const { user, loading } = useAuthUser();
-
+    const { user, loading} = useContext(Context);
     if (loading) return null;
-
     if (!user) return <Navigate to="/signin" replace />;
-
     if (!allowedRoles.includes(user.role))
         return <Navigate to="/dashboard" replace />;
-
     return children;
 }
 

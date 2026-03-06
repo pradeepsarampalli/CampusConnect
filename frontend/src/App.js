@@ -1,8 +1,11 @@
 import AppRoutes from "./routes/AppRoutes";
+import {UserContext} from "./context/UserContext.js"
 
 function App() {
   return (
-    <AppRoutes/>
+    <UserContext>
+          <AppRoutes/>
+    </UserContext>
   );
 }
 

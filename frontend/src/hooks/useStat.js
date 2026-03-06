@@ -7,7 +7,7 @@ export default function useStats(){
         let isMounted = true;
         async function fetchStats(){
             try{
-            const res = await fetch("http://localhost:3001/api/admin/getStats")
+            const res = await fetch("http://localhost:3001/api/admin/getStats",{credentials:"include"})
             const data = await res.json()
 
             if(isMounted){

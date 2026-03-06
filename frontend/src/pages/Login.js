@@ -3,16 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import hide from "../assets/hide.png"
 import view from "../assets/view.png"
-import { useState } from "react";
-import { setCurrentUser } from "../utils/auth";
+import { useContext, useState } from "react";
+import {Context} from "../context/UserContext.js"
 function Login(){
+    const {setUser} = useContext(Context)
     const [hs,setHs] = useState(true)
-    const [email,setEmail] = useState("")
-    const [password,setPassword] = useState("")
+    const [formData,setFormData] = useState({email:"",password:""})
     const navigate = useNavigate()
+
+    const handleChange = (e)=>{
+        const {name,value} = e.target
+        setFormData(prev=>({...prev,[name]:value}))
+    }
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
+        const {email,password} = formData
         if(!email || !password) {
             alert("Please Enter all the details!")
             return;
@@ -30,14 +36,13 @@ function Login(){
                 return;
             }
 
-            const user = {
+            setUser( {
                 id: data.id,
                 name: data.name,
                 email: data.email,
                 role: data.role,
                 avatarUrl: data.avatarUrl
-            }
-            setCurrentUser(user)
+            });
             navigate("/dashboard", { replace:true })
         }catch(err){
             console.error(err)
@@ -54,9 +59,9 @@ function Login(){
             <p>CampusConnect</p>
         </div>
         <div className="details">
-            <input type="text" id="email" placeholder="Email or Phone" onChange={e=>{setEmail(e.target.value)}}></input>
+            <input type="text" id="email"  name="email" placeholder="Email or Phone" value={formData.email} onChange={(e)=>handleChange(e)}></input>
             <div>
-                <input type = {hs?"password":"text"} id="password" placeholder="Password" onChange={e=>{setPassword(e.target.value)}}></input>
+                <input type = {hs?"password":"text"} name="password" id="password" placeholder="Password" value={formData.password} onChange={(e)=>handleChange(e)}></input>
                 <img id="hs-password" src={hs?hide:view} alt="hide-icon" onClick={()=>setHs(!hs)}></img>
             </div>
             <p>No account? <Link to="/signup">Sign up</Link></p>
