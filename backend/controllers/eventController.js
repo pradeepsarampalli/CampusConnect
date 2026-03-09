@@ -5,10 +5,11 @@ import EventRegistration from "../models/EventRegistration.js"
 export async function createEvent(req, res) {
     try {
         const { title, description, date, location, capacity } = req.body
+        const organizedBy = req.user._id
         // if (!title || !date || !location || !capacity) {
         //     return res.status(400).json({ message: "Required fields missing" })
         // }
-        const event = await Event.create({title,description,date,location,capacity,seatsRemaining:Number(capacity)})
+        const event = await Event.create({title,description,date,location,capacity,seatsRemaining:Number(capacity),organizedBy})
         res.status(201).json({message: "Event created successfully",event})
     } catch (err) {
         console.error(err)
@@ -79,6 +80,55 @@ export async function getEvents(req, res) {
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: "Failed to fetch events" })
+    }
+}
+
+export async function getCreatedEvents(req,res){
+    try{
+        const organizerId = req.user.id
+
+        const events = await Event.find({createdBy : organizerId})
+        if(events.length==0){
+            return res.status(404).json({message : "No events found!"})
+        }
+        res.status(200).json({ events })
+    }
+    catch(err){
+        console.error(err)
+        res.status(500).json({message : "Failed to fetch events"})
+    }
+}
+
+export async function editCreatedEvents(req,res){
+    try{
+        const organizerId = req.user.id
+        const { eventId } = req.params
+        const updatedData = req.body
+        const event = Event.findByIdAndUpdate({_id:eventId, createdBy:organizerId},updatedData,{returnDocument : 'after'})
+        if(!event){
+            res.status(404).json({message : "Event not found"})
+        }
+        res.status(200).json({message:"Event updated successfully",event})
+    }
+    catch(err){
+        console.error(err)
+        res.status(500).json({message : "Failed to fetch events"})
+    }
+}
+
+export async function deleteCreatedEvents(req,res){
+    try{
+        const organizerId = req.user.id
+        const { eventId } = req.params
+        const event = Event.findByIdAndDelete({_id:eventId, createdBy:organizerId})
+        if(!event){
+            res.status(404).json({message : "Event not found"})
+        }
+        res.status(200).json({message : "Event deleted successfully"})
+    }
+    catch(err){
+        console.error(err)
+        res.status(500).json({message : "Failed to fetch events"})
     }
 }
 
