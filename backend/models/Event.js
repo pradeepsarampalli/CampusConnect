@@ -22,6 +22,11 @@ const eventSchema = new mongoose.Schema({
     },
     seatsRemaining: {
         type: Number
+    },
+    organizedBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        req:true
     }
 }, { timestamps: true })
 
