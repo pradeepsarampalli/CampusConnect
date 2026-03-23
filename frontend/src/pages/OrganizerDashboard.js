@@ -209,7 +209,7 @@ function OrganizerDashboard() {
 
             <div className="dashboard-header">
                 <div>
-                    <h1 className="dashboard-title">Welcome, {name} 🎯</h1>
+                    <h1 className="dashboard-title">Welcome, {name} !</h1>
                     <p className="dashboard-subtitle">Manage your events, registrations and volunteers.</p>
                 </div>
                 <span className="role-badge role-organizer">Organizer</span>

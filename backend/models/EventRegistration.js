@@ -12,14 +12,11 @@ const registrationSchema = new mongoose.Schema({
         required: true
     },
     qrCode: {
-        type: String,   // base64 data URI of the generated QR image
+        type: String, 
         default: null
     }
 }, { timestamps: true })
 
-// Prevent duplicate registration
 registrationSchema.index({ userId: 1, eventId: 1 }, { unique: true })
-
 const EventRegistration = mongoose.model("EventRegistration", registrationSchema)
-
 export default EventRegistration

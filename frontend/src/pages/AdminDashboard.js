@@ -83,9 +83,10 @@ function AdminDashboard() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(eventData)
             });
+            console.log(res)
             if (res.ok) {
                 const { event } = await res.json();
-                if (event.maxVolunteers > 0) setEvents(prev => [...prev, event]);
+                if (event.maxVolunteers >= 0) setEvents(prev => [...prev, event]);
             } else {
                 console.error('Failed to save event');
             }

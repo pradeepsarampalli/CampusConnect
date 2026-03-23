@@ -6,15 +6,12 @@ import { Context } from '../context/UserContext';
 
 function Events() {
     const { user } = useContext(Context);
-
-    const [events, setEvents]                = useState([]);
-    const [loadingId, setLoadingId]          = useState(null);
-    const [message, setMessage]              = useState('');
-    const [showEditModal, setShowEditModal]  = useState(false);
-    const [editData, setEditData]            = useState(null);
-
+    const [events, setEvents] = useState([]);
+    const [loadingId, setLoadingId] = useState(null);
+    const [message, setMessage] = useState('');
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editData, setEditData] = useState(null);
     const [qrModal, setQrModal] = useState({ open: false, qrCode: null, eventTitle: '' });
-
     const [myRegistrations, setMyRegistrations] = useState({});
 
 
@@ -39,7 +36,10 @@ function Events() {
                 if (!res.ok) return;
                 const data = await res.json();
                 const map = {};
-                data.registrations.forEach(r => { map[String(r.eventId)] = r.qrCode; });
+                data.registrations.forEach(r => {
+                    const key = r.eventId?._id ? String(r.eventId._id) : String(r.eventId);
+                    map[key] = r.qrCode;
+                });
                 setMyRegistrations(map);
             } catch (err) {
                 console.error('Failed to load registrations:', err);
@@ -65,7 +65,10 @@ function Events() {
 
 
     const handleRegister = async (eventId, eventTitle) => {
-        if (!user) { setMessage('Please sign in to register for events.'); return; }
+        if (!user) {
+            setMessage('Please sign in to register for events.');
+            return;
+        }
         setLoadingId(eventId);
         setMessage('');
         try {
@@ -87,11 +90,7 @@ function Events() {
             }
 
             setEvents(prev =>
-                prev.map(e =>
-                    (e._id === eventId || e.id === eventId)
-                        ? { ...e, seatsRemaining: e.seatsRemaining - 1 }
-                        : e
-                )
+                prev.map(e =>(e._id === eventId || e.id === eventId)? { ...e, seatsRemaining: e.seatsRemaining - 1 }: e)
             );
 
             setMyRegistrations(prev => ({ ...prev, [eventId]: data.qrCode }));
@@ -168,14 +167,14 @@ function Events() {
                     <div className="modal">
                         <h2>Edit Event</h2>
                         <form onSubmit={handleEditSubmit} className="modal-form">
-                            <input type="text"   name="title"       value={editData.title}       onChange={handleEditChange} required />
-                            <textarea            name="description" value={editData.description} onChange={handleEditChange} required />
-                            <input type="text"   name="location"    value={editData.location}    onChange={handleEditChange} required />
-                            <input type="date"   name="date"        value={editData.date}        onChange={handleEditChange} required />
-                            <input type="number" name="capacity"    value={editData.capacity}    onChange={handleEditChange} required />
+                            <input type="text" name="title" value={editData.title} onChange={handleEditChange} required />
+                            <textarea name="description" value={editData.description} onChange={handleEditChange} required />
+                            <input type="text" name="location" value={editData.location} onChange={handleEditChange} required />
+                            <input type="date" name="date" value={editData.date} onChange={handleEditChange} required />
+                            <input type="number" name="capacity" value={editData.capacity} onChange={handleEditChange} required />
                             <div className="modal-actions">
-                                <button type="submit"  className="primary-btn">Update</button>
-                                <button type="button"  className="secondary-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+                                <button type="submit" className="primary-btn">Update</button>
+                                <button type="button" className="secondary-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -209,10 +208,10 @@ function Events() {
 
             <div className="events-grid">
                 {events.map((event) => {
-                    const id         = event._id || event.id;
-                    const isFull     = event.seatsRemaining <= 0;
+                    const id = event._id || event.id;
+                    const isFull = event.seatsRemaining <= 0;
                     const registered = Boolean(myRegistrations[id]);
-                    const progress   = event.seatsRemaining / event.capacity;
+                    const progress = event.seatsRemaining / event.capacity;
 
                     return (
                         <div key={id} className="event-card">
@@ -226,15 +225,12 @@ function Events() {
                                     <span className="event-location">{event.location}</span>
                                 </div>
                                 <p className="event-description">{event.description}</p>
-
-                                {/* Edit / Delete — admin only */}
                                 {user?.role === 'admin' && (
                                     <div className="event-actions">
-                                        <button className="icon-btn edit-btn"   onClick={() => handleEdit(event)} type="button"><Pencil  size={16} /></button>
-                                        <button className="icon-btn delete-btn" onClick={() => handleDelete(id)}  type="button"><Trash2  size={16} /></button>
+                                        <button className="icon-btn edit-btn" onClick={() => handleEdit(event)} type="button"><Pencil size={16} /></button>
+                                        <button className="icon-btn delete-btn" onClick={() => handleDelete(id)} type="button"><Trash2 size={16} /></button>
                                     </div>
                                 )}
-
                                 {registered ? (
                                     <button
                                         className="register-btn registered"

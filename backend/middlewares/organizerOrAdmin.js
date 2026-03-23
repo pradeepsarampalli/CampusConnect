@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken'
 const jwt_secret = 'bigwhitepigisherebrodontpickthemsimplystupid'
 
-/** Allows both admin and organizer roles through. Sets req.user. */
 export function organizerOrAdmin(req, res, next) {
     const token = req.cookies.jwt
     if (!token) return res.status(401).json({ message: 'Unauthorized access!' })

@@ -3,20 +3,12 @@ import Event from "../models/Event.js"
 import EventRegistration from "../models/EventRegistration.js"
 import VolunteerApplication from "../models/VolunteerApplication.js"
 
-// ─────────────────────────────────────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────────────────────────────────────
-
-/** Returns true if the requester is admin OR the organizer who created the event */
 function canManageEvent(user, event) {
     if (user.role === 'admin') return true
     if (user.role === 'organizer' && String(event.createdBy) === String(user.id)) return true
     return false
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// EVENT CRUD
-// ─────────────────────────────────────────────────────────────────────────────
 
 export async function createEvent(req, res) {
     try {
@@ -26,11 +18,11 @@ export async function createEvent(req, res) {
         }
         const event = await Event.create({
             title, description, date, location,
-            capacity:            Number(capacity),
-            seatsRemaining:      Number(capacity),
-            maxVolunteers:       Number(maxVolunteers) || 0,
+            capacity:Number(capacity),
+            seatsRemaining:Number(capacity),
+            maxVolunteers:Number(maxVolunteers) || 0,
             volunteersRemaining: Number(maxVolunteers) || 0,
-            createdBy:           req.user.id
+            createdBy:req.user.id
         })
         res.status(201).json({ message: "Event created successfully", event })
     } catch (err) {
@@ -49,7 +41,6 @@ export async function getEvents(req, res) {
     }
 }
 
-// GET events created by the logged-in organizer (or all events for admin)
 export async function getMyEvents(req, res) {
     try {
         const filter = req.user.role === 'admin' ? {} : { createdBy: req.user.id }
@@ -95,9 +86,6 @@ export async function deleteEvent(req, res) {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ATTENDEE REGISTRATIONS
-// ─────────────────────────────────────────────────────────────────────────────
 
 export async function registerForEvent(req, res) {
     try {
@@ -145,7 +133,7 @@ export async function getMyQR(req, res) {
     }
 }
 
-// My registrations — populate event title for the dashboard list
+
 export async function getMyRegisteredEvents(req, res) {
     try {
         const userId = req.user.id
@@ -159,7 +147,6 @@ export async function getMyRegisteredEvents(req, res) {
     }
 }
 
-// GET all attendee registrations for a specific event (admin or that event's organizer)
 export async function getEventRegistrations(req, res) {
     try {
         const { eventId } = req.params
@@ -191,9 +178,6 @@ export async function getRegistrationCount(req, res) {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// VOLUNTEER APPLICATIONS
-// ─────────────────────────────────────────────────────────────────────────────
 
 export async function applyAsVolunteer(req, res) {
     try {
@@ -232,7 +216,6 @@ export async function applyAsVolunteer(req, res) {
     }
 }
 
-// My volunteer applications — populated with event info
 export async function getMyVolunteerApplications(req, res) {
     try {
         const userId = req.user.id
@@ -247,7 +230,6 @@ export async function getMyVolunteerApplications(req, res) {
     }
 }
 
-// Events with open volunteer slots
 export async function getVolunteerOpportunities(req, res) {
     try {
         const events = await Event.find({ maxVolunteers: { $gt: 0 }, volunteersRemaining: { $gt: 0 } })
@@ -258,7 +240,6 @@ export async function getVolunteerOpportunities(req, res) {
     }
 }
 
-// GET all volunteer applications for a specific event (admin or that event's organizer)
 export async function getEventVolunteerApplications(req, res) {
     try {
         const { eventId } = req.params
@@ -278,7 +259,6 @@ export async function getEventVolunteerApplications(req, res) {
     }
 }
 
-// PATCH approve/reject a volunteer application (admin or that event's organizer)
 export async function updateVolunteerStatus(req, res) {
     try {
         const { eventId, applicationId } = req.params

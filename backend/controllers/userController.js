@@ -17,14 +17,15 @@ export async function getUsers(req,res){
 
 export async function signUp(req,res) {
     try{
-        const {email,password,name} =req.body
+        const {email,password,name,role} =req.body
         const hashedPassword = await bcrypt.hash(password,saltRounds);
-        const user = await User.create({name,email,password:hashedPassword});
+        const user = await User.create({name,email,password:hashedPassword,role});
         const token = jwt.sign({id:user._id,role:user.role},jwt_secret)
         res.cookie('jwt',token,{secure:false,httpOnly:true})
         res.status(201).json({user:user})
     }
     catch(err){
+        console.log(err)
         res.status(500).json({message:"Failed"})
     }
 }
@@ -55,6 +56,7 @@ export async function signIn(req,res){
         });
 
     }catch(err){
+        console.log(err)
         res.status(500).json({message:"An error has occurred!"});
     }
 }

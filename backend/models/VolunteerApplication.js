@@ -17,12 +17,12 @@ const volunteerApplicationSchema = new mongoose.Schema({
         default: "pending"
     },
     qrCode: {
-        type: String,   // base64 data URI — generated on application
+        type: String,
         default: null
     }
 }, { timestamps: true })
 
-// One application per user per event
+
 volunteerApplicationSchema.index({ userId: 1, eventId: 1 }, { unique: true })
 
 const VolunteerApplication = mongoose.model("VolunteerApplication", volunteerApplicationSchema)
