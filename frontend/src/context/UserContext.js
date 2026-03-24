@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from 'react';
 
 export const Context = createContext();
 
@@ -9,10 +9,9 @@ export function UserContext({ children }) {
     useEffect(() => {
         async function loadUser() {
             try {
-                const res = await fetch("http://localhost:3001/api/auth/me", {
-                    credentials: "include"
+                const res = await fetch('http://localhost:3001/api/auth/me', {
+                    credentials: 'include',
                 });
-
                 if (res.ok) {
                     const data = await res.json();
                     setUser(data);
@@ -27,9 +26,5 @@ export function UserContext({ children }) {
         loadUser();
     }, []);
 
-    return (
-        <Context.Provider value={{ user, setUser, loading }}>
-            {children}
-        </Context.Provider>
-    );
+    return <Context.Provider value={{ user, setUser, loading }}>{children}</Context.Provider>;
 }

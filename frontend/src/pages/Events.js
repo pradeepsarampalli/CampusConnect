@@ -11,32 +11,38 @@ function Events() {
     const [message, setMessage] = useState('');
     const [showEditModal, setShowEditModal] = useState(false);
     const [editData, setEditData] = useState(null);
-    const [qrModal, setQrModal] = useState({ open: false, qrCode: null, eventTitle: '' });
+    const [qrModal, setQrModal] = useState({
+        open: false,
+        qrCode: null,
+        eventTitle: '',
+    });
     const [myRegistrations, setMyRegistrations] = useState({});
-
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return new Intl.DateTimeFormat('en-US', {
-            month: 'long', day: 'numeric', year: 'numeric',
-            hour: 'numeric', minute: '2-digit', hour12: true,
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
         }).format(date);
     };
 
     const closeQR = () => setQrModal({ open: false, qrCode: null, eventTitle: '' });
-
 
     useEffect(() => {
         if (!user) return;
         const fetchMyRegistrations = async () => {
             try {
                 const res = await fetch('http://localhost:3001/api/events/my/registrations', {
-                    credentials: 'include'
+                    credentials: 'include',
                 });
                 if (!res.ok) return;
                 const data = await res.json();
                 const map = {};
-                data.registrations.forEach(r => {
+                data.registrations.forEach((r) => {
                     const key = r.eventId?._id ? String(r.eventId._id) : String(r.eventId);
                     map[key] = r.qrCode;
                 });
@@ -48,11 +54,12 @@ function Events() {
         fetchMyRegistrations();
     }, [user]);
 
-
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await fetch('http://localhost:3001/api/events', { credentials: 'include' });
+                const res = await fetch('http://localhost:3001/api/events', {
+                    credentials: 'include',
+                });
                 const data = await res.json();
                 setEvents(data);
             } catch (err) {
@@ -62,7 +69,6 @@ function Events() {
         };
         fetchEvents();
     }, []);
-
 
     const handleRegister = async (eventId, eventTitle) => {
         if (!user) {
@@ -75,13 +81,16 @@ function Events() {
             const res = await fetch(`http://localhost:3001/api/events/${eventId}/register`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
             });
             const data = await res.json();
 
             if (!res.ok) {
                 if (data.qrCode) {
-                    setMyRegistrations(prev => ({ ...prev, [eventId]: data.qrCode }));
+                    setMyRegistrations((prev) => ({
+                        ...prev,
+                        [eventId]: data.qrCode,
+                    }));
                     setQrModal({ open: true, qrCode: data.qrCode, eventTitle });
                 } else {
                     setMessage(data.message || 'Registration failed.');
@@ -89,13 +98,10 @@ function Events() {
                 return;
             }
 
-            setEvents(prev =>
-                prev.map(e =>(e._id === eventId || e.id === eventId)? { ...e, seatsRemaining: e.seatsRemaining - 1 }: e)
-            );
+            setEvents((prev) => prev.map((e) => (e._id === eventId || e.id === eventId ? { ...e, seatsRemaining: e.seatsRemaining - 1 } : e)));
 
-            setMyRegistrations(prev => ({ ...prev, [eventId]: data.qrCode }));
+            setMyRegistrations((prev) => ({ ...prev, [eventId]: data.qrCode }));
             setQrModal({ open: true, qrCode: data.qrCode, eventTitle });
-
         } catch (err) {
             console.error(err);
             setMessage('Registration failed.');
@@ -104,12 +110,10 @@ function Events() {
         }
     };
 
-
     const handleViewQR = (eventId, eventTitle) => {
         const qrCode = myRegistrations[eventId];
         if (qrCode) setQrModal({ open: true, qrCode, eventTitle });
     };
-
 
     const handleDownloadQR = () => {
         const link = document.createElement('a');
@@ -118,14 +122,13 @@ function Events() {
         link.click();
     };
 
-
     const handleEdit = (event) => {
         setEditData({ ...event, date: event.date?.split('T')[0] });
         setShowEditModal(true);
     };
     const handleEditChange = (e) => {
         const { name, value } = e.target;
-        setEditData(prev => ({ ...prev, [name]: value }));
+        setEditData((prev) => ({ ...prev, [name]: value }));
     };
     const handleEditSubmit = async (e) => {
         e.preventDefault();
@@ -134,10 +137,10 @@ function Events() {
                 method: 'PUT',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(editData)
+                body: JSON.stringify(editData),
             });
             setShowEditModal(false);
-            if (res.ok) setEvents(prev => prev.map(ev => ev._id === editData._id ? { ...editData } : ev));
+            if (res.ok) setEvents((prev) => prev.map((ev) => (ev._id === editData._id ? { ...editData } : ev)));
         } catch (err) {
             console.error('Failed to update event', err);
         }
@@ -146,12 +149,14 @@ function Events() {
     const handleDelete = async (eventId) => {
         try {
             const res = await fetch(`http://localhost:3001/api/events/${eventId}`, {
-                method: 'DELETE', credentials: 'include'
+                method: 'DELETE',
+                credentials: 'include',
             });
-            if (res.ok) setEvents(events => events.filter(e => e._id !== eventId));
-        } catch (err) { console.error(err); }
+            if (res.ok) setEvents((events) => events.filter((e) => e._id !== eventId));
+        } catch (err) {
+            console.error(err);
+        }
     };
-
 
     return (
         <div className="events-page">
@@ -173,8 +178,12 @@ function Events() {
                             <input type="date" name="date" value={editData.date} onChange={handleEditChange} required />
                             <input type="number" name="capacity" value={editData.capacity} onChange={handleEditChange} required />
                             <div className="modal-actions">
-                                <button type="submit" className="primary-btn">Update</button>
-                                <button type="button" className="secondary-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+                                <button type="submit" className="primary-btn">
+                                    Update
+                                </button>
+                                <button type="button" className="secondary-btn" onClick={() => setShowEditModal(false)}>
+                                    Cancel
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -183,7 +192,7 @@ function Events() {
 
             {qrModal.open && (
                 <div className="modal-overlay" onClick={closeQR}>
-                    <div className="modal qr-modal" onClick={e => e.stopPropagation()}>
+                    <div className="modal qr-modal" onClick={(e) => e.stopPropagation()}>
                         <button className="qr-close-btn" onClick={closeQR} aria-label="Close">
                             <X size={20} />
                         </button>
@@ -195,9 +204,7 @@ function Events() {
                         <div className="qr-image-wrapper">
                             <img src={qrModal.qrCode} alt="QR Code for event entry" className="qr-image" />
                         </div>
-                        <p className="qr-instructions">
-                            Present this QR code at the entrance to check&nbsp;in.
-                        </p>
+                        <p className="qr-instructions">Present this QR code at the entrance to check&nbsp;in.</p>
                         <button className="download-btn" onClick={handleDownloadQR}>
                             <Download size={16} style={{ marginRight: 6 }} />
                             Download Pass
@@ -227,16 +234,16 @@ function Events() {
                                 <p className="event-description">{event.description}</p>
                                 {user?.role === 'admin' && (
                                     <div className="event-actions">
-                                        <button className="icon-btn edit-btn" onClick={() => handleEdit(event)} type="button"><Pencil size={16} /></button>
-                                        <button className="icon-btn delete-btn" onClick={() => handleDelete(id)} type="button"><Trash2 size={16} /></button>
+                                        <button className="icon-btn edit-btn" onClick={() => handleEdit(event)} type="button">
+                                            <Pencil size={16} />
+                                        </button>
+                                        <button className="icon-btn delete-btn" onClick={() => handleDelete(id)} type="button">
+                                            <Trash2 size={16} />
+                                        </button>
                                     </div>
                                 )}
                                 {registered ? (
-                                    <button
-                                        className="register-btn registered"
-                                        type="button"
-                                        onClick={() => handleViewQR(id, event.title)}
-                                    >
+                                    <button className="register-btn registered" type="button" onClick={() => handleViewQR(id, event.title)}>
                                         <QrCode size={15} style={{ marginRight: 6 }} />
                                         View My QR
                                     </button>
@@ -248,11 +255,7 @@ function Events() {
                                         style={{ '--progress': progress }}
                                         onClick={() => handleRegister(id, event.title)}
                                     >
-                                        {isFull
-                                            ? 'Full'
-                                            : loadingId === id
-                                                ? 'Registering...'
-                                                : `Register (${event.seatsRemaining} left)`}
+                                        {isFull ? 'Full' : loadingId === id ? 'Registering...' : `Register (${event.seatsRemaining} left)`}
                                     </button>
                                 )}
                             </div>

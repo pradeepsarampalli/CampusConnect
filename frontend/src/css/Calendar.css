@@ -17,7 +17,7 @@
     font-size: 14px;
     color: #6b7280;
 }
-.calendar-parent-container{
+.calendar-parent-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

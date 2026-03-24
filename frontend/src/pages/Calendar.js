@@ -31,51 +31,55 @@ function Calendar() {
                 <h1>Academic Calendar</h1>
                 <p>{currentMonth}</p>
             </div>
-            <div className='calendar-parent-container'>
-            <div className="calendar-container">
-                <div className="calendar-weekdays">
-                    {weekDays.map((wd) => (
-                        <div key={wd} className="weekday">
-                            {wd}
-                        </div>
-                    ))}
-                </div >
-                <div className="calendar-grid">
-                    {calendarDays.map((item, idx) => (
-                        <div
-                            key={idx}
-                            className={`calendar-day ${item.hasEvent ? 'has-event' : ''} ${item.day ? 'clickable' : 'empty'}`}
-                            onClick={() => handleDayClick(item)}
-                            role={item.day ? 'button' : undefined}
-                            tabIndex={item.day ? 0 : undefined}
-                            onKeyDown={(e) => item.day && (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), handleDayClick(item))}
-                            aria-label={item.day ? `View events for February ${item.day}` : undefined}
-                        >
-                            {item.day || ''}
-                        </div>
-                    ))}
+            <div className="calendar-parent-container">
+                <div className="calendar-container">
+                    <div className="calendar-weekdays">
+                        {weekDays.map((wd) => (
+                            <div key={wd} className="weekday">
+                                {wd}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="calendar-grid">
+                        {calendarDays.map((item, idx) => (
+                            <div
+                                key={idx}
+                                className={`calendar-day ${item.hasEvent ? 'has-event' : ''} ${item.day ? 'clickable' : 'empty'}`}
+                                onClick={() => handleDayClick(item)}
+                                role={item.day ? 'button' : undefined}
+                                tabIndex={item.day ? 0 : undefined}
+                                onKeyDown={(e) => item.day && (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), handleDayClick(item))}
+                                aria-label={item.day ? `View events for February ${item.day}` : undefined}
+                            >
+                                {item.day || ''}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="calendar-legend">
+                        <span className="legend-item">
+                            <span className="legend-dot has-event"></span> Event scheduled
+                        </span>
+                    </div>
                 </div>
-                <div className="calendar-legend">
-                    <span className="legend-item">
-                        <span className="legend-dot has-event"></span> Event scheduled
-                    </span>
+                <div className="calendar-events-list">
+                    <h3>Events This Month</h3>
+                    <ul>
+                        <li>
+                            <strong>Feb 5</strong> – Career Fair
+                        </li>
+                        <li>
+                            <strong>Feb 15</strong> – Cultural Night
+                        </li>
+                        <li>
+                            <strong>Feb 22</strong> – Sports Day
+                        </li>
+                        <li>
+                            <strong>Feb 25</strong> – Tech Fest 2025
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <div className="calendar-events-list">
-                <h3>Events This Month</h3>
-                <ul>
-                    <li><strong>Feb 5</strong> – Career Fair</li>
-                    <li><strong>Feb 15</strong> – Cultural Night</li>
-                    <li><strong>Feb 22</strong> – Sports Day</li>
-                    <li><strong>Feb 25</strong> – Tech Fest 2025</li>
-                </ul>
-            </div>
-            </div>
-            <CalendarDateModal
-                selectedDate={selectedDate}
-                month="February"
-                onClose={() => setSelectedDate(null)}
-            />
+            <CalendarDateModal selectedDate={selectedDate} month="February" onClose={() => setSelectedDate(null)} />
         </div>
     );
 }

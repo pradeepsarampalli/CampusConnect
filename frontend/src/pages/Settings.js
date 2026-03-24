@@ -19,12 +19,7 @@ function Settings() {
                 <p>Manage your account preferences</p>
             </div>
             <div className="settings-sections">
-                <SettingsCard
-                    title="Profile"
-                    description="Update your name, email, and profile picture."
-                    isOpen={openSection === 'profile'}
-                    onClick={() => toggleSection('profile')}
-                >
+                <SettingsCard title="Profile" description="Update your name, email, and profile picture." isOpen={openSection === 'profile'} onClick={() => toggleSection('profile')}>
                     <SettingsProfile />
                 </SettingsCard>
                 <SettingsCard
@@ -35,12 +30,7 @@ function Settings() {
                 >
                     <SettingsNotifications />
                 </SettingsCard>
-                <SettingsCard
-                    title="Privacy"
-                    description="Control your visibility and data sharing preferences."
-                    isOpen={openSection === 'privacy'}
-                    onClick={() => toggleSection('privacy')}
-                >
+                <SettingsCard title="Privacy" description="Control your visibility and data sharing preferences." isOpen={openSection === 'privacy'} onClick={() => toggleSection('privacy')}>
                     <SettingsPrivacy />
                 </SettingsCard>
             </div>

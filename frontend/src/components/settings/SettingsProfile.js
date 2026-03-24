@@ -8,7 +8,7 @@ function SettingsProfile() {
     const [saved, setSaved] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
-     const {user,setUser} = useContext(Context);
+    const { user, setUser } = useContext(Context);
 
     const handleSave = async (e) => {
         e.preventDefault();
@@ -44,7 +44,7 @@ function SettingsProfile() {
                 role: data.role,
                 avatarUrl: data.avatarUrl,
             };
-            setUser(updatedUser)
+            setUser(updatedUser);
             setSaved(true);
             setTimeout(() => setSaved(false), 2000);
         } catch (err) {
@@ -59,33 +59,15 @@ function SettingsProfile() {
         <form className="settings-expand-content" onSubmit={handleSave}>
             <div className="settings-field">
                 <label htmlFor="profile-name">Name</label>
-                <input
-                    id="profile-name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                />
+                <input id="profile-name" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
             </div>
             <div className="settings-field">
                 <label htmlFor="profile-email">Email</label>
-                <input
-                    id="profile-email"
-                    type="email"
-                    value={email}
-                    readOnly
-                    placeholder="your@email.com"
-                />
+                <input id="profile-email" type="email" value={email} readOnly placeholder="your@email.com" />
             </div>
             <div className="settings-field">
                 <label htmlFor="profile-avatar">Avatar URL</label>
-                <input
-                    id="profile-avatar"
-                    type="text"
-                    value={avatarUrl}
-                    onChange={(e) => setAvatarUrl(e.target.value)}
-                    placeholder="https://example.com/avatar.jpg"
-                />
+                <input id="profile-avatar" type="text" value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} placeholder="https://example.com/avatar.jpg" />
             </div>
             {error && <p className="settings-error">{error}</p>}
             <button type="submit" className="settings-save-btn">

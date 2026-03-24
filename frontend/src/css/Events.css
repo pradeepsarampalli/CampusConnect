@@ -1,7 +1,7 @@
-/* --- Card Layout --- */
+
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 32px;
     padding: 20px 0 40px 0;
 }
@@ -14,8 +14,10 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    height: 100%; /* Important for equal height in rows */
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    height: 100%; 
 }
 
 .event-card:hover {
@@ -23,7 +25,6 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Header & Image --- */
 .event-card-image {
     height: 130px;
     background: #f8fafc;
@@ -39,12 +40,11 @@
     object-fit: contain;
 }
 
-/* --- Content & Hierarchy --- */
 .event-card-content {
     padding: 24px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Allows this container to expand */
+    flex-grow: 1;
 }
 
 .event-card-content h3 {
@@ -56,7 +56,7 @@
 
 .event-meta {
     display: flex;
-    justify-content: space-between; /* Date left, Location right */
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 14px;
 }
@@ -77,20 +77,17 @@
 
 .event-description {
     font-size: 14px;
-    color: #4b5563; /* Muted gray */
+    color: #4b5563;
     line-height: 1.6;
     margin-bottom: 20px;
-    
-    /* Clamp to 2 lines with ellipsis */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* --- Footer Alignment --- */
 .event-footer {
-    margin-top: auto; /* Pushes the entire footer to the bottom of the card */
+    margin-top: auto; 
 }
 
 .event-capacity {
@@ -102,9 +99,8 @@
     margin-bottom: 10px;
 }
 
-/* --- Professional Button with Progress Bar --- */
 .register-btn {
-    position: relative; /* Base for absolute progress bar */
+    position: relative; 
     width: 100%;
     padding: 14px;
     background: #3182ce;
@@ -114,8 +110,10 @@
     font-weight: 600;
     font-size: 13px;
     cursor: pointer;
-    overflow: hidden; /* Clips the bar to button corners */
-    transition: background 0.2s ease, transform 0.1s ease;
+    overflow: hidden;
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
 }
 
 .register-btn:hover:not(:disabled) {
@@ -123,36 +121,47 @@
 }
 
 .register-btn:active:not(:disabled) {
-    transform: scale(0.97); /* Scale animation on click */
+    transform: scale(0.97);
 }
 
 .btn-text {
     position: relative;
-    z-index: 2; /* Sits above the progress bar */
+    z-index: 2; 
 }
 
 .btn-progress {
     position: absolute;
     top: 0;
     left: 0;
-    height: 4px; /* Thin progress bar at top of button */
+    height: 4px;
     z-index: 1;
     transition: width 0.5s ease;
 }
 
-.btn-progress.high { background: #48bb78; }    /* Green */
-.btn-progress.medium { background: #ecc94b; }  /* Yellow */
-.btn-progress.low { background: #f56565; }     /* Red */
+.btn-progress.high {
+    background: #48bb78;
+}
+.btn-progress.medium {
+    background: #ecc94b;
+}
+.btn-progress.low {
+    background: #f56565;
+}
 
 .register-btn.full {
     background: #cbd5e1;
     cursor: not-allowed;
 }
 
-/* --- Mobile Fix --- */
 @media (max-width: 600px) {
-    .events-grid { grid-template-columns: 1fr; }
-    .event-meta { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+    .event-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
 }
 
 .event-actions {
@@ -194,9 +203,7 @@
     background: #fee2e2;
 }
 
-/* ────────────────────────────────────────────────────────────────
-   QR Modal
-────────────────────────────────────────────────────────────────── */
+
 .qr-modal {
     max-width: 380px;
     width: 90%;
@@ -224,7 +231,9 @@
     align-items: center;
     justify-content: center;
     color: #64748b;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
 }
 .qr-close-btn:hover {
     background: #e2e8f0;
@@ -295,13 +304,19 @@
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
     width: 100%;
 }
-.download-btn:hover  { background: #2b6cb0; }
-.download-btn:active { transform: scale(0.97); }
+.download-btn:hover {
+    background: #2b6cb0;
+}
+.download-btn:active {
+    transform: scale(0.97);
+}
 
-/* Already-registered state for the register button */
+
 .register-btn.registered {
     background: #10b981;
     display: flex;
@@ -313,7 +328,6 @@
     background: #059669;
 }
 
-/* Events page header */
 .events-header {
     margin-bottom: 8px;
 }
@@ -338,7 +352,7 @@
     margin-bottom: 8px;
 }
 
-/* Modal overlay (shared) */
+
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -410,7 +424,9 @@
     cursor: pointer;
     transition: background 0.2s;
 }
-.primary-btn:hover { background: #2b6cb0; }
+.primary-btn:hover {
+    background: #2b6cb0;
+}
 
 .secondary-btn {
     flex: 1;
@@ -424,4 +440,6 @@
     cursor: pointer;
     transition: background 0.2s;
 }
-.secondary-btn:hover { background: #e2e8f0; }
+.secondary-btn:hover {
+    background: #e2e8f0;
+}

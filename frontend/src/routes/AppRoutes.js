@@ -18,7 +18,7 @@ function DashboardRedirect() {
     const { user, loading } = useContext(Context);
     if (loading) return null;
     if (!user) return <Navigate to="/signin" replace />;
-    if (user.role === 'admin')     return <Navigate to="/dashboard/admin"     replace />;
+    if (user.role === 'admin') return <Navigate to="/dashboard/admin" replace />;
     if (user.role === 'organizer') return <Navigate to="/dashboard/organizer" replace />;
     return <Navigate to="/dashboard/user" replace />;
 }
@@ -40,28 +40,40 @@ function AppRoutes() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<DashboardRedirect />} />
                     <Route path="dashboard" element={<DashboardRedirect />} />
-
-                    <Route path="dashboard/admin"
-                        element={<RoleGuard allowedRoles={['admin']}><AdminDashboard /></RoleGuard>}
+                    <Route
+                        path="dashboard/admin"
+                        element={
+                            <RoleGuard allowedRoles={['admin']}>
+                                <AdminDashboard />
+                            </RoleGuard>
+                        }
                     />
-                    <Route path="dashboard/organizer"
-                        element={<RoleGuard allowedRoles={['organizer', 'admin']}><OrganizerDashboard /></RoleGuard>}
+                    <Route
+                        path="dashboard/organizer"
+                        element={
+                            <RoleGuard allowedRoles={['organizer', 'admin']}>
+                                <OrganizerDashboard />
+                            </RoleGuard>
+                        }
                     />
-                    <Route path="dashboard/user"
-                        element={<RoleGuard allowedRoles={['user', 'organizer', 'admin']}><UserDashboard /></RoleGuard>}
+                    <Route
+                        path="dashboard/user"
+                        element={
+                            <RoleGuard allowedRoles={['user', 'organizer', 'admin']}>
+                                <UserDashboard />
+                            </RoleGuard>
+                        }
                     />
-
-                    <Route path="events"   element={<Events />} />
-                    <Route path="notices"  element={<Notices />} />
+                    <Route path="events" element={<Events />} />
+                    <Route path="notices" element={<Notices />} />
                     <Route path="about-us" element={<AboutUs />} />
                     <Route path="calendar" element={<Calendar />} />
                     <Route path="settings" element={<Settings />} />
-                    <Route path="support"  element={<Support />} />
+                    <Route path="support" element={<Support />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );
 }
-
 export default AppRoutes;

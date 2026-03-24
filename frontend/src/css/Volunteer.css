@@ -30,7 +30,9 @@
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
 }
 
 .volunteer-card:hover {
@@ -68,7 +70,9 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.15s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease;
 }
 
 .volunteer-card .apply-btn:hover {

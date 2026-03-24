@@ -3,7 +3,7 @@ import { Context } from '../context/UserContext';
 import { useContext } from 'react';
 
 function VolunteerDashboard() {
-    const {user} = useContext(Context);
+    const { user } = useContext(Context);
     const name = user?.name || 'Volunteer';
     const role = (user?.role || 'volunteer').toLowerCase();
 
@@ -76,5 +76,3 @@ function VolunteerDashboard() {
 }
 
 export default VolunteerDashboard;
-
-

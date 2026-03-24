@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import '../css/Dashboard.css';
+import { Bell } from 'lucide-react';
 import locationIcon from '../assets/location.png';
 import { Context } from '../context/UserContext';
 
@@ -14,7 +15,7 @@ function Layout() {
     const [notifLoading, setNotifLoading] = useState(false);
     const [notifItems, setNotifItems] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
-    const {user,setUser} = useContext(Context);
+    const { user, setUser } = useContext(Context);
 
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
@@ -141,12 +142,26 @@ function Layout() {
                 <div className="header">
                     <div className="header-left">
                         {width < 800 ? (
-                            <button className="menu-btn" onClick={() => setOpen(!open)}>☰</button>
+                            <button className="menu-btn" onClick={() => setOpen(!open)}>
+                                ☰
+                            </button>
                         ) : (
                             <ul>
-                                <li><Link to="/events"><button>Events</button></Link></li>
-                                <li><Link to="/notices"><button>Notices</button></Link></li>
-                                <li><Link to="/support"><button>Support</button></Link></li>
+                                <li>
+                                    <Link to="/events">
+                                        <button>Events</button>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/notices">
+                                        <button>Notices</button>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/support">
+                                        <button>Support</button>
+                                    </Link>
+                                </li>
                             </ul>
                         )}
                     </div>
@@ -155,67 +170,62 @@ function Layout() {
                     </div>
                     <div className="header-right">
                         <ul>
-                            <li><Link to="/about-us"><button>About Us</button></Link></li>
-                            <li><Link to="/calendar"><button>Calendar</button></Link></li>
-                            {user?"":<li><Link to="/signup"><button>Sign Up</button></Link></li>}
+                            <li>
+                                <Link to="/about-us">
+                                    <button>About Us</button>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/calendar">
+                                    <button>Calendar</button>
+                                </Link>
+                            </li>
+                            {user ? (
+                                ''
+                            ) : (
+                                <li>
+                                    <Link to="/signup">
+                                        <button>Sign Up</button>
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                         <div className="header-actions">
                             <div className="notification-menu">
-                                <button
-                                    type="button"
-                                    className="notification-bell"
-                                    onClick={handleToggleNotifications}
-                                    aria-haspopup="true"
-                                    aria-expanded={notifOpen}
-                                >
-                                    <span className="bell-icon">🔔</span>
-                                    {unreadCount > 0 && (
-                                        <span className="notification-badge">
-                                            {unreadCount > 9 ? '9+' : unreadCount}
-                                        </span>
-                                    )}
+                                <button type="button" className="notification-bell" onClick={handleToggleNotifications} aria-haspopup="true" aria-expanded={notifOpen}>
+                                    <Bell size={24} />
+                                    {unreadCount > 0 && <span className="notification-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>}
                                 </button>
                                 {notifOpen && (
                                     <div className="notification-dropdown">
                                         <div className="notification-header">Notifications</div>
                                         {notifLoading && <div className="notification-empty">Loading...</div>}
-                                        {!notifLoading && notifItems.slice(0, 3).map((n) => (
-                                            <button
-                                                type="button"
-                                                key={n._id}
-                                                className="notification-item"
-                                                onClick={() => {
-                                                    setNotifOpen(false);
-                                                    navigate('/notices');
-                                                }}
-                                            >
-                                                <div className="notification-title">{n.title}</div>
-                                                <div className="notification-body">
-                                                    {(n.body || '').slice(0, 60)}
-                                                    {n.body && n.body.length > 60 ? '…' : ''}
-                                                </div>
-                                            </button>
-                                        ))}
-                                        {!notifLoading && notifItems.length === 0 && (
-                                            <div className="notification-empty">No notices available.</div>
-                                        )}
+                                        {!notifLoading &&
+                                            notifItems.slice(0, 3).map((n) => (
+                                                <button
+                                                    type="button"
+                                                    key={n._id}
+                                                    className="notification-item"
+                                                    onClick={() => {
+                                                        setNotifOpen(false);
+                                                        navigate('/notices');
+                                                    }}
+                                                >
+                                                    <div className="notification-title">{n.title}</div>
+                                                    <div className="notification-body">
+                                                        {(n.body || '').slice(0, 60)}
+                                                        {n.body && n.body.length > 60 ? '…' : ''}
+                                                    </div>
+                                                </button>
+                                            ))}
+                                        {!notifLoading && notifItems.length === 0 && <div className="notification-empty">No notices available.</div>}
                                     </div>
                                 )}
                             </div>
                             {user && (
                                 <div className="profile-menu">
-                                    <button
-                                        type="button"
-                                        className="profile-avatar"
-                                        onClick={() => setProfileOpen((prev) => !prev)}
-                                        aria-haspopup="true"
-                                        aria-expanded={profileOpen}
-                                    >
-                                        {user?.avatarUrl ? (
-                                            <img src={user.avatarUrl} alt={user?.name || "Profile"} />
-                                        ) : (
-                                            (user?.name || "U").charAt(0).toUpperCase()
-                                        )}
+                                    <button type="button" className="profile-avatar" onClick={() => setProfileOpen((prev) => !prev)} aria-haspopup="true" aria-expanded={profileOpen}>
+                                        {user?.avatarUrl ? <img src={user.avatarUrl} alt={user?.name || 'Profile'} /> : (user?.name || 'U').charAt(0).toUpperCase()}
                                     </button>
                                     {profileOpen && (
                                         <div className="profile-dropdown">
@@ -233,11 +243,7 @@ function Layout() {
                                             >
                                                 Profile
                                             </button>
-                                            <button
-                                                type="button"
-                                                className="profile-action"
-                                                onClick={handleLogout}
-                                            >
+                                            <button type="button" className="profile-action" onClick={handleLogout}>
                                                 Logout
                                             </button>
                                         </div>

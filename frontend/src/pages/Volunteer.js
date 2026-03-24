@@ -53,7 +53,9 @@ function Volunteer() {
                             <h3>{opp.role}</h3>
                             <p className="volunteer-event">{opp.event}</p>
                             <p className="volunteer-description">{opp.description}</p>
-                            <button className="apply-btn" type="button">Apply</button>
+                            <button className="apply-btn" type="button">
+                                Apply
+                            </button>
                         </div>
                     </div>
                 ))}

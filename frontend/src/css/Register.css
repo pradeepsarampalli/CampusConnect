@@ -1,5 +1,9 @@
 .auth-page {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family:
+        'Segoe UI',
+        system-ui,
+        -apple-system,
+        sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -148,7 +152,9 @@ h1 {
     color: white;
     border: none;
     border-radius: 8px;
-    transition: background-color 0.2s ease, transform 0.15s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease;
 }
 
 .details button:hover {

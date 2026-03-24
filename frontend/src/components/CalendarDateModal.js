@@ -10,7 +10,7 @@ function CalendarDateModal({ selectedDate, month, onClose }) {
         (e) => {
             if (e.key === 'Escape') onClose();
         },
-        [onClose]
+        [onClose],
     );
 
     useEffect(() => {

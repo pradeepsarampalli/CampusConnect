@@ -8,12 +8,7 @@ function SettingsPrivacy() {
         <div className="settings-expand-content">
             <div className="settings-field">
                 <label htmlFor="profile-visibility">Profile visibility</label>
-                <select
-                    id="profile-visibility"
-                    value={visibility}
-                    onChange={(e) => setVisibility(e.target.value)}
-                    className="settings-select"
-                >
+                <select id="profile-visibility" value={visibility} onChange={(e) => setVisibility(e.target.value)} className="settings-select">
                     <option value="all">Everyone</option>
                     <option value="students">Students only</option>
                     <option value="private">Private</option>
