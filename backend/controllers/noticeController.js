@@ -20,7 +20,7 @@ export async function createNotice(req,res){
             createdAt
         })
         await notice.save();
-        res.status(201).json({message:"Noitce cearted succesfully!"})
+        res.status(201).json({message:"Notice created succesfully!"})
     }
     catch(err){
         res.status(500).json({message:"Notice not saved an error occured!"})
@@ -32,7 +32,7 @@ export async function deleteNotice(req,res){
         const {id} = req.params;
         const notice = await Notice.findByIdAndDelete(id)
         if(!notice) return res.status(404).json({message:"Notice is not found!"})
-        res.status(201).json({message:"Notice deleted!"})
+        res.status(200).json({message:"Notice deleted!"})
     }
     catch(err){
         res.status(404).json({message:"Notice is not found!"})

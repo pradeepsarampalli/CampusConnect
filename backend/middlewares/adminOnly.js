@@ -4,13 +4,13 @@ const jwt_secret = process.env.JWT_SECRET || 'bigwhitepigisherebrodontpickthemsi
 
 export async function adminOnly(req,res,next){
     const token = req.cookies.jwt
-    if(!token) return res.status(401).json({message:'Unauthotized access!'})
+    if(!token) return res.status(401).json({message:'Unauthorized access!'})
     try{
     const user = jwt.verify(token,jwt_secret)
-    if(user.role!=='admin') return res.status(403).json({message:'Unauthotized access!(Only admin can access this)'})
+    if(user.role!=='admin') return res.status(403).json({message:'Unauthorized access!(Only admin can access this)'})
     next();
     }
     catch(err){
-        res.status(401).json({message:'Unauthotized access!'})
+        res.status(401).json({message:'Unauthorized access!'})
     }
 }

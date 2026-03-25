@@ -21,7 +21,6 @@ export async function createEvent(req, res) {
             capacity:Number(capacity),
             seatsRemaining:Number(capacity),
             maxVolunteers:Number(maxVolunteers) || 0,
-            volunteersRemaining: Number(maxVolunteers) || 0,
             createdBy:req.user.id,
             time:time
         })
@@ -110,8 +109,8 @@ export async function registerForEvent(req, res) {
         })
 
         const registration = await EventRegistration.create({ userId, eventId: id, qrCode })
-        event.seatsRemaining -= 1
         await event.save()
+        event.seatsRemaining -= 1
 
         res.status(201).json({ message: "Registered successfully", qrCode, registrationId: registration._id })
     } catch (err) {
