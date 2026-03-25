@@ -406,7 +406,7 @@ function AdminDashboard() {
                                                         </div>
                                                         <div className="vol-admin-app-actions">
                                                             <StatusBadge status={app.status} />
-                                                            {app.status !== 'approved' && (
+                                                            {app.status !== 'approved'&&(
                                                                 <button
                                                                     className="vol-action-btn approve"
                                                                     title="Approve"

@@ -138,34 +138,34 @@ function UserDashboard() {
             });
             const data = await res.json();
 
-            if (!res.ok) {
-                if (data.qrCode) {
-                    setAppliedIds((prev) => ({
-                        ...prev,
-                        [eventId]: { qrCode: data.qrCode, status: data.status },
-                    }));
-                    setQrModal({
-                        open: true,
-                        qrCode: data.qrCode,
-                        title: eventTitle,
-                        subtitle: 'Volunteer Pass',
-                    });
-                }
-                return;
-            }
+            // if (!res.ok) {
+            //     if (data.qrCode) {
+            //         setAppliedIds((prev) => ({
+            //             ...prev,
+            //             [eventId]: { qrCode: data.qrCode, status: data.status },
+            //         }));
+            //         setQrModal({
+            //             open: true,
+            //             qrCode: data.qrCode,
+            //             title: eventTitle,
+            //             subtitle: 'Volunteer Pass',
+            //         });
+            //     }
+            //     return;
+            // }
 
-            setOpportunities((prev) =>
-                prev
-                    .map((e) =>
-                        e._id === eventId
-                            ? {
-                                  ...e,
-                                  volunteersRemaining: e.volunteersRemaining - 1,
-                              }
-                            : e,
-                    )
-                    .filter((e) => e.volunteersRemaining > 0),
-            );
+            // setOpportunities((prev) =>
+            //     prev
+            //         .map((e) =>
+            //             e._id === eventId
+            //                 ? {
+            //                       ...e,
+            //                       volunteersRemaining: e.volunteersRemaining - 1,
+            //                   }
+            //                 : e,
+            //         )
+            //         .filter((e) => e.volunteersRemaining > 0),
+            // );
 
             setAppliedIds((prev) => ({
                 ...prev,
@@ -181,12 +181,12 @@ function UserDashboard() {
                 },
                 ...prev,
             ]);
-            setQrModal({
-                open: true,
-                qrCode: data.qrCode,
-                title: eventTitle,
-                subtitle: 'Volunteer Pass',
-            });
+            // setQrModal({
+            //     open: true,
+            //     qrCode: data.qrCode,
+            //     title: eventTitle,
+            //     subtitle: 'Volunteer Pass',
+            // });
         } catch (err) {
             console.error(err);
         } finally {
@@ -333,7 +333,7 @@ function UserDashboard() {
                                                         </span>
                                                     )}
                                                 </div>
-                                                <button
+                                                {<button
                                                     className="qr-inline-btn"
                                                     onClick={() =>
                                                         setQrModal({
@@ -345,7 +345,7 @@ function UserDashboard() {
                                                     }
                                                 >
                                                     <QrCode size={14} /> View QR
-                                                </button>
+                                                </button>}
                                             </li>
                                         );
                                     })}
@@ -418,7 +418,8 @@ function UserDashboard() {
                                                 {applied ? (
                                                     <div className="vol-applied-row">
                                                         <StatusBadge status={applied.status} />
-                                                        {applied.qrCode && (
+                                                        {console.log(applied.status)}
+                                                        {applied.status==='approved' && (
                                                             <button
                                                                 className="qr-inline-btn"
                                                                 onClick={() =>
@@ -468,7 +469,7 @@ function UserDashboard() {
                                             </div>
                                             <div className="vol-app-actions">
                                                 <StatusBadge status={app.status} />
-                                                {app.qrCode && (
+                                                {app.status==='approved' && (
                                                     <button
                                                         className="qr-inline-btn"
                                                         onClick={() =>
