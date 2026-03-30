@@ -268,11 +268,13 @@ function Events() {
           const isFull = event.seatsRemaining <= 0;
           const registered = Boolean(myRegistrations[id]);
           const progress = event.seatsRemaining / event.capacity;
+          const isExpired = new Date(event.date) < new Date(new Date().toDateString());
 
           return (
-            <div key={id} className="event-card">
+            <div key={id} className={`event-card ${isExpired ? 'event-card--expired' : ''}`}>
               <div className="event-card-image">
                 <img src={logo} alt={event.title} />
+                {isExpired && <span className="expired-badge">Expired</span>}
               </div>
               <div className="event-card-content">
                 <h3>{event.title}</h3>
@@ -298,13 +300,13 @@ function Events() {
                   </button>
                 ) : (
                   <button
-                    className={`register-btn ${isFull ? 'full' : ''}`}
+                    className={`register-btn ${isFull ? 'full' : ''} ${isExpired ? 'expired' : ''}`}
                     type="button"
-                    disabled={isFull || loadingId === id}
+                    disabled={isFull || isExpired || loadingId === id}
                     style={{ '--progress': progress }}
                     onClick={() => handleRegister(id, event.title)}
                   >
-                    {isFull ? 'Full' : loadingId === id ? 'Registering...' : `Register (${event.seatsRemaining} left)`}
+                    {isExpired ? 'Event Expired' : isFull ? 'Full' : loadingId === id ? 'Registering...' : `Register (${event.seatsRemaining} left)`}
                   </button>
                 )}
               </div>
