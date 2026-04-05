@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import {API_BASE_URL} from "../config/api.js"
 import '../css/Calendar.css';
 
 function CalendarDateModal({ selectedDate, month, events = [], onClose }) {
@@ -60,7 +61,7 @@ function Calendar() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/events', {
+    fetch(`${API_BASE_URL}/api/events`, {
       credentials: 'include',
     })
       .then((res) => res.json())

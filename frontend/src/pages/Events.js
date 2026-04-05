@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import '../css/Events.css';
+import {API_BASE_URL} from "../config/api.js"
 import logo from '../assets/logo.png';
 import { Pencil, Trash2, QrCode, X, Download } from 'lucide-react';
 import { Context } from '../context/UserContext';
@@ -33,7 +34,7 @@ function Events() {
     if (!user) return;
     const fetchMyRegistrations = async () => {
       try {
-        const res = await fetch('http://localhost:3001/api/events/my/registrations', {
+        const res = await fetch(`${API_BASE_URL}/api/events/my/registrations`, {
           credentials: 'include',
         });
         if (!res.ok) return;
@@ -54,7 +55,7 @@ function Events() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch('http://localhost:3001/api/events', {
+        const res = await fetch(`${API_BASE_URL}/api/events`, {
           credentials: 'include',
         });
         const data = await res.json();
@@ -75,7 +76,7 @@ function Events() {
     setLoadingId(eventId);
     setMessage('');
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${eventId}/register`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${eventId}/register`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -152,7 +153,7 @@ function Events() {
     const { timeHour, timeMinute, timePeriod, ...rest } = editData;
     const payload = { ...rest, time: `${timeHour}:${timeMinute}  ${timePeriod}` };
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${payload._id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${payload._id}`, {
         method: 'PUT',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -167,7 +168,7 @@ function Events() {
 
   const handleDelete = async (eventId) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${eventId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${eventId}`, {
         method: 'DELETE',
         credentials: 'include',
       });

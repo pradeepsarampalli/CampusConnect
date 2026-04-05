@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 export default function useStats() {
   const [stats, setStats] = useState(null);
@@ -7,7 +8,7 @@ export default function useStats() {
     let isMounted = true;
     async function fetchStats() {
       try {
-        const res = await fetch('http://localhost:3001/api/admin/getStats', { credentials: 'include' });
+        const res = await fetch(`${API_BASE_URL}/api/admin/getStats`, { credentials: 'include' });
         const data = await res.json();
         if (isMounted) {
           setStats(data);

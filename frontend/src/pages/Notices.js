@@ -1,6 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { Context } from '../context/UserContext';
+import {API_BASE_URL} from "../config/api.js"
 import '../css/Notices.css';
 
 function formatDate(value) {
@@ -33,7 +34,7 @@ function Notices() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3001/api/notices/${id}`, {
+      await fetch(`${API_BASE_URL}/api/notices/${id}`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -63,7 +64,7 @@ function Notices() {
 
   const editNotice = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/notices/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/notices/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +88,7 @@ function Notices() {
     let isMounted = true;
     async function loadNotices() {
       try {
-        const res = await fetch('http://localhost:3001/api/notices', {
+        const res = await fetch(`${API_BASE_URL}/api/notices`, {
           credentials: 'include',
         });
         const data = await res.json();

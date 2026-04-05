@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const jwt_secret =
-  process.env.JWT_SECRET || "bigwhitepigisherebrodontpickthemsimplystupid";
+  process.env.JWT_SECRET || 'Jwt-Token-Here'
 const saltRounds = 10;
 
 export async function getUsers(req, res) {

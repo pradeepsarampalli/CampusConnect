@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import '../css/Dashboard.css';
+import {API_BASE_URL} from "../config/api.js"
 import { Context } from '../context/UserContext.js';
 import { QrCode, X, Download, CalendarCheck, Megaphone, FilePen, Send, Check, FileClock } from 'lucide-react';
 
@@ -86,19 +87,19 @@ function UserDashboard() {
     const load = async () => {
       try {
         const [evRes, notRes, regRes, volAppRes, oppRes] = await Promise.all([
-          fetch('http://localhost:3001/api/events', {
+          fetch(`${API_BASE_URL}/api/events`, {
             credentials: 'include',
           }),
-          fetch('http://localhost:3001/api/notices', {
+          fetch(`${API_BASE_URL}/api/notices`, {
             credentials: 'include',
           }),
-          fetch('http://localhost:3001/api/events/my/registrations', {
+          fetch(`${API_BASE_URL}/api/events/my/registrations`, {
             credentials: 'include',
           }),
-          fetch('http://localhost:3001/api/events/my/volunteer-applications', {
+          fetch(`${API_BASE_URL}/api/events/my/volunteer-applications`, {
             credentials: 'include',
           }),
-          fetch('http://localhost:3001/api/events/volunteer/opportunities', {
+          fetch(`${API_BASE_URL}/api/events/volunteer/opportunities`, {
             credentials: 'include',
           }),
         ]);
@@ -131,7 +132,7 @@ function UserDashboard() {
   const handleVolunteerApply = async (eventId, eventTitle) => {
     setLoadingVolId(eventId);
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${eventId}/volunteer`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${eventId}/volunteer`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

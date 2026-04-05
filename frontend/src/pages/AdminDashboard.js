@@ -3,7 +3,7 @@ import { Context } from '../context/UserContext.js';
 import useStats from '../hooks/useStat.js';
 import { useContext, useState, useEffect } from 'react';
 import { Users, CalendarDays, Megaphone, HandHelping, ChevronDown, ChevronUp, Check, X } from 'lucide-react';
-
+import {API_BASE_URL} from "../config/api.js"
 function StatusBadge({ status }) {
   const map = {
     pending: { bg: '#fffbeb', color: '#b45309', label: 'Pending' },
@@ -62,7 +62,7 @@ function AdminDashboard() {
   const [actionLoading, setActionLoading] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/events', { credentials: 'include' })
+    fetch(`${API_BASE_URL}/api/events`, { credentials: 'include' })
       .then((r) => r.json())
       .then((data) => setEvents(Array.isArray(data) ? data.filter((e) => e.maxVolunteers > 0) : []))
       .catch(console.error);
@@ -75,7 +75,7 @@ function AdminDashboard() {
   async function handleNoticeSubmit(e) {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:3001/api/notices', {
+      const res = await fetch(`${API_BASE_URL}/api/notices`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -98,7 +98,7 @@ function AdminDashboard() {
     const { timeHour, timeMinute, timePeriod, ...rest } = eventData;
     const payload = { ...rest, time: `${timeHour}:${timeMinute}  ${timePeriod}` };
     try {
-      const res = await fetch('http://localhost:3001/api/events', {
+      const res = await fetch(`${API_BASE_URL}/api/events`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -138,7 +138,7 @@ function AdminDashboard() {
 
     setLoadingApps((prev) => ({ ...prev, [eventId]: true }));
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${eventId}/volunteer-applications`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${eventId}/volunteer-applications`, {
         credentials: 'include',
       });
       if (res.ok) {
@@ -158,7 +158,7 @@ function AdminDashboard() {
   async function handleStatusUpdate(eventId, applicationId, newStatus) {
     setActionLoading(applicationId);
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${eventId}/volunteer/${applicationId}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${eventId}/volunteer/${applicationId}/status`, {
         method: 'PATCH',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

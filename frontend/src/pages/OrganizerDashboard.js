@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import '../css/Dashboard.css';
+import {API_BASE_URL} from "../config/api.js"
 import { Context } from '../context/UserContext.js';
 import { CalendarDays, Users, HandHelping, ChevronDown, ChevronUp, Check, X, Plus, Pencil, Trash2, QrCode, Download } from 'lucide-react';
 
@@ -103,7 +104,7 @@ function OrganizerDashboard() {
 
   useEffect(() => {
     if (!user) return;
-    fetch('http://localhost:3001/api/events/my/events', {
+    fetch(`${API_BASE_URL}/api/events/my/events`, {
       credentials: 'include',
     })
       .then((r) => r.json())
@@ -161,7 +162,7 @@ function OrganizerDashboard() {
       time: `${eventForm.timeHour}:${eventForm.timeMinute} ${eventForm.timePeriod}`,
     };
     const method = editingEvent ? 'PUT' : 'POST';
-    const url = editingEvent ? `http://localhost:3001/api/events/${editingEvent._id}` : 'http://localhost:3001/api/events';
+    const url = editingEvent ? `${API_BASE_URL}/api/events/${editingEvent._id}` : `${API_BASE_URL}/api/events`;
     try {
       const res = await fetch(url, {
         method,
@@ -183,7 +184,7 @@ function OrganizerDashboard() {
     const evId = deleteModal.eventId;
 
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${evId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${evId}`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -207,7 +208,7 @@ function OrganizerDashboard() {
     if (registrations[evId]) return;
     setRegLoading(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${evId}/registrations`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${evId}/registrations`, {
         credentials: 'include',
       });
       const data = await res.json();
@@ -231,7 +232,7 @@ function OrganizerDashboard() {
     if (volApps[evId]) return;
     setVolLoading(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${evId}/volunteer-applications`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${evId}/volunteer-applications`, {
         credentials: 'include',
       });
       const data = await res.json();
@@ -249,7 +250,7 @@ function OrganizerDashboard() {
   async function handleVolStatus(evId, appId, status) {
     setActionLoading(appId);
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${evId}/volunteer/${appId}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/events/${evId}/volunteer/${appId}/status`, {
         method: 'PATCH',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

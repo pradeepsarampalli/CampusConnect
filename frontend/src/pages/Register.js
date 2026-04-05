@@ -2,6 +2,7 @@ import '../css/Register.css';
 import { Link, useNavigate } from 'react-router-dom';
 import hide from '../assets/hide.png';
 import view from '../assets/view.png';
+import {API_BASE_URL} from "../config/api.js"
 import { useContext, useState } from 'react';
 import { Context } from '../context/UserContext';
 
@@ -45,7 +46,7 @@ function Register() {
     setSuccess('');
     if (!validateForm()) return;
     try {
-      const res = await fetch('http://localhost:3001/api/auth/signup', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

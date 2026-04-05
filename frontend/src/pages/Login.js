@@ -1,6 +1,7 @@
 import '../css/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import hide from '../assets/hide.png';
+import {API_BASE_URL} from "../config/api.js"
 import view from '../assets/view.png';
 import { useContext, useState } from 'react';
 import { Context } from '../context/UserContext.js';
@@ -33,7 +34,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/signin', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signin`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

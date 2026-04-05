@@ -104,7 +104,7 @@ npm install
 npm start
 ```
 
-The React app runs on `http://localhost:3000` and proxies API requests to `http://localhost:3001`.
+The React app runs on `http://localhost:3000` and proxies API requests to `${API_BASE_URL}`.
 
 ---
 

@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 export const Context = createContext();
 
@@ -9,7 +10,7 @@ export function UserContext({ children }) {
   useEffect(() => {
     async function loadUser() {
       try {
-        const res = await fetch('http://localhost:3001/api/auth/me', {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
           credentials: 'include',
         });
         if (res.ok) {
